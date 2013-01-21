@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAnyType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <anyType xsi:type="EmitterData">
+    <FileName>smoke.jpg</FileName>
+    <PositionX>351</PositionX>
+    <PositionY>547</PositionY>
+    <DimensionX>212</DimensionX>
+    <DimensionY>1</DimensionY>
+    <VelocityX>0</VelocityX>
+    <VelociytY>0</VelociytY>
+    <AccelerationX>0</AccelerationX>
+    <AccelerationY>0</AccelerationY>
+    <GravityX>0</GravityX>
+    <GravityY>0</GravityY>
+    <ParticleAmount>430</ParticleAmount>
+    <SpreadAngle>0</SpreadAngle>
+    <StartAlpha>255</StartAlpha>
+    <StartRed>255</StartRed>
+    <StartGreen>48</StartGreen>
+    <StartBlue>0</StartBlue>
+    <EndAlpha>58</EndAlpha>
+    <EndRed>255</EndRed>
+    <EndGreen>149</EndGreen>
+    <EndBlue>0</EndBlue>
+    <StartScale>1</StartScale>
+    <EndScale>0.2</EndScale>
+    <MaxLife>3</MaxLife>
+    <MinLife>1</MinLife>
+    <StartRotation>0</StartRotation>
+    <EndRotation>0</EndRotation>
+    <OffsetX>0</OffsetX>
+    <OffsetY>0</OffsetY>
+    <SrcBlend>14</SrcBlend>
+    <DestBlend>4</DestBlend>
+    <Looping>true</Looping>
+    <GravPointCount>1</GravPointCount>
+  </anyType>
+  <anyType xsi:type="GravPoint">
+    <PositionX>427</PositionX>
+    <PositionY>299</PositionY>
+    <VelocityX>-20</VelocityX>
+    <VelocityY>-0.3</VelocityY>
+  </anyType>
+</ArrayOfAnyType>
