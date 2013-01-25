@@ -809,5 +809,21 @@ namespace ParticleEditor
 
         #endregion
 
+        private void btnUpLoadTexture_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "PNG Files|*.png|JPG Files|*.jpg|BMP Files|*.bmp";
+            openFileDialog1.Title = "Select a Cursor File";
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Bitmap normalBmp = new Bitmap(openFileDialog1.FileName);
+
+                pbSample.Image = normalBmp;
+                // Assign the cursor in the Stream to the Form's Cursor property.
+                //this.Cursor = new Cursor(openFileDialog1.OpenFile());
+            }
+        }
+
     }
 }

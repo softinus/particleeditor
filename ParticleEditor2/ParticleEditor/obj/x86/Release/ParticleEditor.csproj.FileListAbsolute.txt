@@ -14,3 +14,16 @@ C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Release\Gener
 C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Release\GenerateResource.write.1.tlog
 C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Release\ParticleEditor.exe
 C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Release\ParticleEditor.pdb
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\bin\Release\ParticleEditor.exe.config
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.exe
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.pdb
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\bin\Release\ParticleEditor.exe
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\bin\Release\ParticleEditor.pdb
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ResolveAssemblyReference.cache
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.MainForm.resources
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.Properties.Resources.resources
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.UC_ParticleControl.resources
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.UC_ParticleMain.resources
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.UC_ParticleView.resources
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\GenerateResource.read.1.tlog
+H:\개인프로젝트\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\GenerateResource.write.1.tlog
