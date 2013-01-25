@@ -407,6 +407,7 @@
             this.btnUpLoadTexture.TabIndex = 5;
             this.btnUpLoadTexture.Text = "Upload Texture";
             this.btnUpLoadTexture.UseVisualStyleBackColor = true;
+            this.btnUpLoadTexture.Click += new System.EventHandler(this.btnUpLoadTexture_Click);
             // 
             // label5
             // 
