@@ -1,0 +1,12 @@
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.MainForm.resources
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.Properties.Resources.resources
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.UC_ParticleControl.resources
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.UC_ParticleMain.resources
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.UC_ParticleView.resources
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\bin\Debug\ParticleEditor.exe
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\bin\Debug\ParticleEditor.pdb
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.exe
+C:\Users\LeeJongHyuk\Desktop\ParticleEditor\ParticleEditor\obj\x86\Debug\ParticleEditor.pdb
