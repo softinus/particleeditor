@@ -42,12 +42,12 @@ namespace ParticleEditor
                 switch (i)
                 {
                     case 0:
-                        Random rnd0 = new Random();
+                        Random rnd0 = new Random(System.DateTime.Now.Millisecond);
                         float fRnd0 = rnd0.Next(0, 1000);
                         StartPoints[i] = fRnd0 / 1000.0f;
                         break;
                     case 9:
-                        Random rnd9 = new Random();
+                        Random rnd9 = new Random(System.DateTime.Now.Millisecond);
                         float fRnd9 = rnd9.Next(0, 1000);
                         StartPoints[i] = fRnd9 / 1000.0f;
                         break;
@@ -56,7 +56,7 @@ namespace ParticleEditor
 
                         while (bResult)
                         {
-                            Random rnd = new Random();
+                            Random rnd = new Random(System.DateTime.Now.Millisecond);
                             float fRnd = rnd.Next(0, 1000) / 1000.0f;
 
                             if (fRnd == StartPoints[i - 1])
@@ -104,7 +104,7 @@ namespace ParticleEditor
         {
             openGL = _openGL;
 
-            Random rnd = new Random();
+            Random rnd = new Random(System.DateTime.Now.Millisecond);
 
             upPoint = new UpPoint(_fStartPoint);
             downPoint = new DownPoint(upPoint.Y);
@@ -126,7 +126,7 @@ namespace ParticleEditor
         }
         public void Update()
         {
-            Random rnd = new Random();
+            Random rnd = new Random(System.DateTime.Now.Millisecond);
             float fRand = (float)(rnd.Next() % 500.0f);
             fRand = fRand / 5000.0f;
 
@@ -140,7 +140,7 @@ namespace ParticleEditor
         }
         public void ParticleDead()
         {
-            Random rnd = new Random();
+            Random rnd = new Random(System.DateTime.Now.Millisecond);
             float fRnd = rnd.Next(0, 1000) / 1000;
 
             upPoint.Y = fRnd;
