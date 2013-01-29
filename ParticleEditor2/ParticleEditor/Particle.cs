@@ -2,12 +2,201 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SharpGL;
+using SharpGL.SceneGraph.Assets;
+using System.Drawing;
+using System.Threading;
 
 namespace ParticleEditor
 {
-    class Particle
+    public class Particle
     {
-        public Particle()
+        public OpenGL openGL = new OpenGL();
+        public ParticleData particleData = null;
+        public ParticleEngine[] particles = null;
+        public Texture texture = null;
+        public float[] StartPoints = null;
+
+        public Particle(OpenGL _openGL, int _iCount)
+        {
+            openGL = _openGL;
+            particleData = new ParticleData();
+            particles = new ParticleEngine[_iCount];
+            StartPoints = new float[_iCount];
+
+            GetStartPoint(_iCount);
+
+            for (int i = 0; i < _iCount; i++)
+            {
+                ParticleEngine particle = new ParticleEngine(openGL, StartPoints[i]);
+                particles[i] = particle;
+            }
+            
+            texture = new Texture();
+        }
+
+        private void GetStartPoint(int _iCount)
+        {
+            for (int i = 0; i < _iCount; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        Random rnd0 = new Random();
+                        float fRnd0 = rnd0.Next(0, 1000);
+                        StartPoints[i] = fRnd0 / 1000.0f;
+                        break;
+                    case 9:
+                        Random rnd9 = new Random();
+                        float fRnd9 = rnd9.Next(0, 1000);
+                        StartPoints[i] = fRnd9 / 1000.0f;
+                        break;
+                    default:
+                        bool bResult = true;
+
+                        while (bResult)
+                        {
+                            Random rnd = new Random();
+                            float fRnd = rnd.Next(0, 1000) / 1000.0f;
+
+                            if (fRnd == StartPoints[i - 1])
+                            {
+                                bResult = true;
+                            }
+                            else
+                            {
+                                StartPoints[i] = fRnd;
+                                bResult = false;
+                            }
+                        }
+                        
+                        break;
+                }
+            }
+        }
+
+        public void Draw()
+        {
+            foreach(ParticleEngine particle in particles)
+                particle.Draw(ref particleData, ref texture);//클래스는 참조 형식이지만, 그냥 ref 선언함.
+        }
+        public void Update()
+        {
+            foreach (ParticleEngine particle in particles)
+                particle.Update();
+        }
+
+        public void SetTexture()
+        {
+            texture.Create(openGL, "Star.bmp");
+        }
+    }
+
+    public class ParticleEngine
+    {
+        private OpenGL openGL = new OpenGL();
+        private UpPoint upPoint = null;
+        private DownPoint downPoint = null; 
+        //public float fLife
+        
+
+        public ParticleEngine(OpenGL _openGL, float _fStartPoint)
+        {
+            openGL = _openGL;
+
+            Random rnd = new Random();
+
+            upPoint = new UpPoint(_fStartPoint);
+            downPoint = new DownPoint(upPoint.Y);
+
+        }
+
+        public void Draw(ref ParticleData _particleData, ref Texture _texture)
+        {
+            _texture.Bind(openGL);
+
+            float fCurrentAlpha = 1.0f - upPoint.Y;
+
+            openGL.Color(_particleData.ColorStartR, _particleData.ColorStartG, _particleData.ColorStartB, fCurrentAlpha);//_particleData.ColorStartA);
+
+            openGL.TexCoord(1.0f, 1.0f); openGL.Vertex(upPoint.X, upPoint.Y, 0);
+            openGL.TexCoord(0.0f, 1.0f); openGL.Vertex(downPoint.X, upPoint.Y, 0);
+            openGL.TexCoord(0.0f, 0.0f); openGL.Vertex(downPoint.X, downPoint.Y, 0);
+            openGL.TexCoord(1.0f, 0.0f); openGL.Vertex(upPoint.X, downPoint.Y, 0);
+        }
+        public void Update()
+        {
+            Random rnd = new Random();
+            float fRand = (float)(rnd.Next() % 500.0f);
+            fRand = fRand / 5000.0f;
+
+            upPoint.Y += fRand;
+            downPoint.Y += fRand;
+
+            if (upPoint.Y > 1.0f)
+            {
+                ParticleDead();
+            }
+        }
+        public void ParticleDead()
+        {
+            Random rnd = new Random();
+            float fRnd = rnd.Next(0, 1000) / 1000;
+
+            upPoint.Y = fRnd;
+            downPoint.Y = fRnd - 0.4f;
+        }
+
+        public class UpPoint
+        {
+            private float PointX;
+            public float X
+            {
+                get { return PointX; }
+                set { PointX = value; }
+            }
+
+            private float PointY;
+            public float Y
+            {
+                get { return PointY; }
+                set { PointY = value; }
+            }
+
+            public UpPoint(float _fDistance)
+            {
+                PointX = 0.2f;
+                PointY = _fDistance;
+            }
+        }
+        public class DownPoint
+        {
+            private float PointX;
+            public float X
+            {
+                get { return PointX; }
+                set { PointX = value; }
+            }
+
+            private float PointY;
+            public float Y
+            {
+                get { return PointY; }
+                set { PointY = value; }
+            }
+
+            public DownPoint(float _fDistance)
+            {
+                PointX = -0.2f;
+                PointY = _fDistance - 0.4f;
+            }
+        }
+    }
+
+    ////////
+    public class ParticleData
+    {
+        public ParticleData()
         {
             texture = "Circle";
             backgroundr = 0.0f;
@@ -45,10 +234,10 @@ namespace ParticleEditor
             degsec = 0.0f;
             degsecvar = 0.0f;
 
-            colorstartr = 0.0f;
-            colorstartg = 0.0f;
+            colorstartr = 1.0f;
+            colorstartg = 0.2f;
             colorstartb = 0.0f;
-            colorstarta = 0.0f;
+            colorstarta = 1.0f;
             colorfinishr = 0.0f;
             colorfinishg = 0.0f;
             colorfinishb = 0.0f;
