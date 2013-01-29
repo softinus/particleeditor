@@ -1765,7 +1765,6 @@
             // 
             this.trbFinishA.AutoSize = false;
             this.trbFinishA.Location = new System.Drawing.Point(29, 131);
-            this.trbFinishA.Maximum = 100;
             this.trbFinishA.Name = "trbFinishA";
             this.trbFinishA.Size = new System.Drawing.Size(142, 23);
             this.trbFinishA.TabIndex = 23;
@@ -1795,7 +1794,6 @@
             // 
             this.trbFinishB.AutoSize = false;
             this.trbFinishB.Location = new System.Drawing.Point(29, 102);
-            this.trbFinishB.Maximum = 100;
             this.trbFinishB.Name = "trbFinishB";
             this.trbFinishB.Size = new System.Drawing.Size(142, 23);
             this.trbFinishB.TabIndex = 20;
@@ -1825,7 +1823,6 @@
             // 
             this.trbFinishG.AutoSize = false;
             this.trbFinishG.Location = new System.Drawing.Point(29, 73);
-            this.trbFinishG.Maximum = 100;
             this.trbFinishG.Name = "trbFinishG";
             this.trbFinishG.Size = new System.Drawing.Size(142, 23);
             this.trbFinishG.TabIndex = 17;
@@ -1855,7 +1852,6 @@
             // 
             this.trbFinishR.AutoSize = false;
             this.trbFinishR.Location = new System.Drawing.Point(27, 44);
-            this.trbFinishR.Maximum = 100;
             this.trbFinishR.Name = "trbFinishR";
             this.trbFinishR.Size = new System.Drawing.Size(144, 23);
             this.trbFinishR.TabIndex = 14;
@@ -1916,7 +1912,6 @@
             // 
             this.trbStartA.AutoSize = false;
             this.trbStartA.Location = new System.Drawing.Point(29, 131);
-            this.trbStartA.Maximum = 100;
             this.trbStartA.Name = "trbStartA";
             this.trbStartA.Size = new System.Drawing.Size(142, 23);
             this.trbStartA.TabIndex = 23;
@@ -1946,7 +1941,6 @@
             // 
             this.trbStartB.AutoSize = false;
             this.trbStartB.Location = new System.Drawing.Point(29, 102);
-            this.trbStartB.Maximum = 100;
             this.trbStartB.Name = "trbStartB";
             this.trbStartB.Size = new System.Drawing.Size(142, 23);
             this.trbStartB.TabIndex = 20;
@@ -1976,7 +1970,6 @@
             // 
             this.trbStartG.AutoSize = false;
             this.trbStartG.Location = new System.Drawing.Point(29, 73);
-            this.trbStartG.Maximum = 100;
             this.trbStartG.Name = "trbStartG";
             this.trbStartG.Size = new System.Drawing.Size(142, 23);
             this.trbStartG.TabIndex = 17;
@@ -2006,7 +1999,6 @@
             // 
             this.trbStartR.AutoSize = false;
             this.trbStartR.Location = new System.Drawing.Point(27, 44);
-            this.trbStartR.Maximum = 100;
             this.trbStartR.Name = "trbStartR";
             this.trbStartR.Size = new System.Drawing.Size(144, 23);
             this.trbStartR.TabIndex = 14;
@@ -2172,7 +2164,6 @@
             // 
             this.trbFinishVarA.AutoSize = false;
             this.trbFinishVarA.Location = new System.Drawing.Point(29, 131);
-            this.trbFinishVarA.Maximum = 100;
             this.trbFinishVarA.Name = "trbFinishVarA";
             this.trbFinishVarA.Size = new System.Drawing.Size(142, 23);
             this.trbFinishVarA.TabIndex = 23;
@@ -2202,7 +2193,6 @@
             // 
             this.trbFinishVarB.AutoSize = false;
             this.trbFinishVarB.Location = new System.Drawing.Point(29, 102);
-            this.trbFinishVarB.Maximum = 100;
             this.trbFinishVarB.Name = "trbFinishVarB";
             this.trbFinishVarB.Size = new System.Drawing.Size(142, 23);
             this.trbFinishVarB.TabIndex = 20;
@@ -2232,7 +2222,6 @@
             // 
             this.trbFinishVarG.AutoSize = false;
             this.trbFinishVarG.Location = new System.Drawing.Point(29, 73);
-            this.trbFinishVarG.Maximum = 100;
             this.trbFinishVarG.Name = "trbFinishVarG";
             this.trbFinishVarG.Size = new System.Drawing.Size(142, 23);
             this.trbFinishVarG.TabIndex = 17;
@@ -2262,7 +2251,6 @@
             // 
             this.trbFinishVarR.AutoSize = false;
             this.trbFinishVarR.Location = new System.Drawing.Point(27, 44);
-            this.trbFinishVarR.Maximum = 100;
             this.trbFinishVarR.Name = "trbFinishVarR";
             this.trbFinishVarR.Size = new System.Drawing.Size(144, 23);
             this.trbFinishVarR.TabIndex = 14;
@@ -2323,7 +2311,6 @@
             // 
             this.trbStartVarA.AutoSize = false;
             this.trbStartVarA.Location = new System.Drawing.Point(29, 131);
-            this.trbStartVarA.Maximum = 100;
             this.trbStartVarA.Name = "trbStartVarA";
             this.trbStartVarA.Size = new System.Drawing.Size(142, 23);
             this.trbStartVarA.TabIndex = 23;
@@ -2353,7 +2340,6 @@
             // 
             this.trbStartVarB.AutoSize = false;
             this.trbStartVarB.Location = new System.Drawing.Point(29, 102);
-            this.trbStartVarB.Maximum = 100;
             this.trbStartVarB.Name = "trbStartVarB";
             this.trbStartVarB.Size = new System.Drawing.Size(142, 23);
             this.trbStartVarB.TabIndex = 20;
@@ -2383,7 +2369,6 @@
             // 
             this.trbStartVarG.AutoSize = false;
             this.trbStartVarG.Location = new System.Drawing.Point(29, 73);
-            this.trbStartVarG.Maximum = 100;
             this.trbStartVarG.Name = "trbStartVarG";
             this.trbStartVarG.Size = new System.Drawing.Size(142, 23);
             this.trbStartVarG.TabIndex = 17;
@@ -2413,7 +2398,6 @@
             // 
             this.trbStartVarR.AutoSize = false;
             this.trbStartVarR.Location = new System.Drawing.Point(27, 44);
-            this.trbStartVarR.Maximum = 100;
             this.trbStartVarR.Name = "trbStartVarR";
             this.trbStartVarR.Size = new System.Drawing.Size(144, 23);
             this.trbStartVarR.TabIndex = 14;

@@ -25,6 +25,11 @@ namespace ParticleEditor
             cbTab05Dest.SelectedIndex = 0;
 
             trbDegSec.Value = 3600;
+
+            trbStartR.Value = 10;
+            trbStartG.Value = 2;
+            trbStartB.Value = 0;
+            trbStartA.Value = 10;
         }
 
         public void SetTextuerImage(Image _imgSample)
@@ -285,28 +290,32 @@ namespace ParticleEditor
             float fData = trbStartR.Value * 0.1f;
             tbStartR.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartR(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewStartR(fData);
         }
         private void SetBarToBoxStartG()
         {
             float fData = trbStartG.Value * 0.1f;
             tbStartG.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartG(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewStartG(fData);
         }
         private void SetBarToBoxStartB()
         {
             float fData = trbStartB.Value * 0.1f;
             tbStartB.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartB(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewStartB(fData);
         }
         private void SetBarToBoxStartA()
         {
             float fData = trbStartA.Value * 0.1f;
             tbStartA.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartA(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewStartA(fData);
         }
         private void SetBarToBoxFinishR()
         {

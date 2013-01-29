@@ -66,6 +66,7 @@
     <Compile Include="CP_Buttons.Designer.cs">
       <DependentUpon>CP_Buttons.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileTest.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
