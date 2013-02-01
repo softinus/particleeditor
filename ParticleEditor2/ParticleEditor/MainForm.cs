@@ -41,9 +41,9 @@ namespace ParticleEditor
         {
             m_ParticleMain.SetViewBackB(_fBackB);
         }
-        internal void SetViewTexture(string _szTexture)
+        internal void SetViewTexture(string _szTexture, int _iIndex)
         {
-            m_ParticleMain.SetViewTexture(_szTexture);
+            m_ParticleMain.SetViewTexture(_szTexture, _iIndex);
         }
 
         //Tab02 14
