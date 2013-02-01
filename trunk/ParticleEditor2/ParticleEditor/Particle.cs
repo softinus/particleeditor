@@ -15,181 +15,500 @@ namespace ParticleEditor
         public ParticleData particleData = null;
         public ParticleEngine[] particles = null;
         public Texture texture = null;
-        public float[] StartPoints = null;
 
-        public Particle(OpenGL _openGL, int _iCount)
+        public Particle(OpenGL _openGL)
         {
             openGL = _openGL;
             particleData = new ParticleData();
-            particles = new ParticleEngine[_iCount];
-            StartPoints = new float[_iCount];
+            int iPaticleCount = particleData.MaxParticles;
+            particleData.ParticleInit = false;
 
-            GetStartPoint(_iCount);
+            particles = new ParticleEngine[iPaticleCount];
 
-            for (int i = 0; i < _iCount; i++)
-            {
-                ParticleEngine particle = new ParticleEngine(openGL, StartPoints[i]);
-                particles[i] = particle;
-            }
+            SetTexture(particleData.Texture);
             
-            texture = new Texture();
+            Random rndParticleStart = new Random();
+
+
+            for (int i = 0; i < iPaticleCount; i++)
+            {
+                int iMinStart = 0;
+                int iMaxStart = 3;
+
+                float fStart = rndParticleStart.Next(iMinStart, iMaxStart);
+
+                ParticleEngine particleEngine = new ParticleEngine(_openGL); 
+                particles[i] = particleEngine;
+                particles[i].ParticleMove(fStart, true);
+            }   
         }
 
-        private void GetStartPoint(int _iCount)
+        public void ParticleInit()
         {
-            for (int i = 0; i < _iCount; i++)
+            int iPaticleCount = particleData.MaxParticles;
+            particleData.ParticleInit = false;
+            particles = new ParticleEngine[iPaticleCount];
+            texture = new Texture();
+
+            Random rndParticleStart = new Random();
+
+            for (int i = 0; i < iPaticleCount; i++)
             {
-                switch (i)
-                {
-                    case 0:
-                        Random rnd0 = new Random(System.DateTime.Now.Millisecond);
-                        float fRnd0 = rnd0.Next(0, 1000);
-                        StartPoints[i] = fRnd0 / 1000.0f;
-                        break;
-                    case 9:
-                        Random rnd9 = new Random(System.DateTime.Now.Millisecond);
-                        float fRnd9 = rnd9.Next(0, 1000);
-                        StartPoints[i] = fRnd9 / 1000.0f;
-                        break;
-                    default:
-                        bool bResult = true;
+                ParticleEngine particleEngine = new ParticleEngine(openGL);
+                particles[i] = particleEngine;
 
-                        while (bResult)
-                        {
-                            Random rnd = new Random(System.DateTime.Now.Millisecond);
-                            float fRnd = rnd.Next(0, 1000) / 1000.0f;
+                int iMinStart = 0;
+                int iMaxStart = 3;
 
-                            if (fRnd == StartPoints[i - 1])
-                            {
-                                bResult = true;
-                            }
-                            else
-                            {
-                                StartPoints[i] = fRnd;
-                                bResult = false;
-                            }
-                        }
-                        
-                        break;
-                }
-            }
+                float fStart = rndParticleStart.Next(iMinStart, iMaxStart);
+
+                particles[i].ParticleMove(fStart, true);
+            }   
         }
 
         public void Draw()
         {
             foreach(ParticleEngine particle in particles)
-                particle.Draw(ref particleData, ref texture);//클래스는 참조 형식이지만, 그냥 ref 선언함.
-        }
-        public void Update()
-        {
-            foreach (ParticleEngine particle in particles)
-                particle.Update();
+                particle.Draw(ref particleData, texture);
         }
 
-        public void SetTexture()
+        public void Update()
         {
-            texture.Create(openGL, "Star.bmp");
+            Random rndParticleLife = new Random();
+            Random rndParticleRepeat = new Random();
+            Random rndParticleStart = new Random();
+
+            foreach (ParticleEngine particle in particles)
+            {
+                int iMinLife = 500;
+                int iMaxLife = 2000; //
+
+                int iMinMove = 500;
+                int iMaxMove = 1000;
+
+                int iMinStart = 0;
+                int iMaxStart = 3;
+
+                float fLife = rndParticleLife.Next(iMinLife, iMaxLife) / 1000.0f;
+                float fMove = rndParticleRepeat.Next(iMinMove, iMaxMove);
+                float fStart = rndParticleStart.Next(iMinStart, iMaxStart);
+                
+                particle.Update(fLife, fMove, fStart);
+            }
+
+            if (particleData.TextureInit)
+            {
+                SetTexture(particleData.Texture);
+                particleData.TextureInit = false;
+            }
+
+            if (particleData.ParticleInit)
+            {
+                ParticleInit();
+                particleData.ParticleInit = false;
+            }
+        }
+
+        //public int[] GetRandomData()
+        //{
+        //    int[] iRand = new int[2];
+
+        //    Random rndStep01 = new Random();
+        //    Random rndStep02 = new Random();
+
+        //    int iStep01 = rndStep01.Next(0, 11);
+
+        //    int iStep02 = rndStep02.Next(0, 2);
+        //    int iStep03 = rndStep02.Next(0, 3);
+        //    int iStep04 = rndStep02.Next(0, 4);
+        //    int iStep05 = rndStep02.Next(0, 5);
+        //    int iStep06 = rndStep02.Next(0, 6);
+        //    int iStep07 = rndStep02.Next(0, 7);
+
+        //    switch (iStep01)
+        //    {
+        //        case 0: 
+        //            iRand[0] = 0;
+        //            iRand[1] = 4;
+        //            break;
+        //        case 1:
+        //            iRand[0] = 0;
+        //            iRand[1] = 4;
+        //            break;
+        //        case 2:
+        //            iRand[0] = 0;
+        //            iRand[1] = 4;
+        //            break;
+        //        case 3:
+        //            iRand[0] = 0;
+        //            iRand[1] = 4;
+        //            break;
+        //        case 4:
+        //            iRand[0] = 0;
+        //            iRand[1] = 4;
+        //            break;
+        //        case 5:
+        //            switch (iStep02)
+        //            {
+        //                case 0:
+        //                    iRand[0] = 0;
+        //                    iRand[1] = 4;
+        //                    break;
+        //                case 1:
+        //                    iRand[0] = 4;
+        //                    iRand[1] = 5;
+        //                    break;
+        //            }
+        //            break;
+        //        case 6:
+        //            switch (iStep03)
+        //            {
+        //                case 0:
+        //                    iRand[0] = 0;
+        //                    iRand[1] = 4;
+        //                    break;
+        //                case 1:
+        //                    iRand[0] = 4;
+        //                    iRand[1] = 5;
+        //                    break;
+        //                case 2:
+        //                    iRand[0] = 5;
+        //                    iRand[1] = 6;
+        //                    break;
+        //            }
+        //            break;
+        //        case 7:
+        //            switch (iStep04)
+        //            {
+        //                case 0:
+        //                    iRand[0] = 0;
+        //                    iRand[1] = 4;
+        //                    break;
+        //                case 1:
+        //                    iRand[0] = 4;
+        //                    iRand[1] = 5;
+        //                    break;
+        //                case 2:
+        //                    iRand[0] = 5;
+        //                    iRand[1] = 6;
+        //                    break;
+        //                case 3:
+        //                    iRand[0] = 6;
+        //                    iRand[1] = 7;
+        //                    break;
+        //            }
+        //            break;
+        //        case 8:
+        //            switch (iStep05)
+        //            {
+        //                case 0:
+        //                    iRand[0] = 0;
+        //                    iRand[1] = 4;
+        //                    break;
+        //                case 1:
+        //                    iRand[0] = 4;
+        //                    iRand[1] = 5;
+        //                    break;
+        //                case 2:
+        //                    iRand[0] = 5;
+        //                    iRand[1] = 6;
+        //                    break;
+        //                case 3:
+        //                    iRand[0] = 6;
+        //                    iRand[1] = 7;
+        //                    break;
+        //                case 4:
+        //                    iRand[0] = 7;
+        //                    iRand[1] = 8;
+        //                    break;
+        //            }
+        //            break;
+        //        case 9:
+        //            switch (iStep06)
+        //            {
+        //                case 0:
+        //                    iRand[0] = 0;
+        //                    iRand[1] = 4;
+        //                    break;
+        //                case 1:
+        //                    iRand[0] = 4;
+        //                    iRand[1] = 5;
+        //                    break;
+        //                case 2:
+        //                    iRand[0] = 5;
+        //                    iRand[1] = 6;
+        //                    break;
+        //                case 3:
+        //                    iRand[0] = 6;
+        //                    iRand[1] = 7;
+        //                    break;
+        //                case 4:
+        //                    iRand[0] = 7;
+        //                    iRand[1] = 8;
+        //                    break;
+        //                case 5:
+        //                    iRand[0] = 8;
+        //                    iRand[1] = 9;
+        //                    break;
+        //            }
+        //            break;
+        //        case 10:
+        //            switch (iStep06)
+        //            {
+        //                case 0:
+        //                    iRand[0] = 0;
+        //                    iRand[1] = 4;
+        //                    break;
+        //                case 1:
+        //                    iRand[0] = 4;
+        //                    iRand[1] = 5;
+        //                    break;
+        //                case 2:
+        //                    iRand[0] = 5;
+        //                    iRand[1] = 6;
+        //                    break;
+        //                case 3:
+        //                    iRand[0] = 6;
+        //                    iRand[1] = 7;
+        //                    break;
+        //                case 4:
+        //                    iRand[0] = 7;
+        //                    iRand[1] = 8;
+        //                    break;
+        //                case 5:
+        //                    iRand[0] = 8;
+        //                    iRand[1] = 9;
+        //                    break;
+        //                case 10:
+        //                    iRand[0] = 9;
+        //                    iRand[1] = 10;
+        //                    break;
+        //            }
+        //            break;
+
+        //    }
+
+
+        //    return iRand;
+        //}
+
+        public void SetTexture(string _szParticle)
+        {
+            texture = new Texture();
+            texture.Name = _szParticle;
+            string szPath = "SampleParticle/" + _szParticle;
+            texture.Create(openGL, szPath);
         }
     }
 
     public class ParticleEngine
     {
-        private OpenGL openGL = new OpenGL();
-        private UpPoint upPoint = null;
-        private DownPoint downPoint = null; 
-        //public float fLife
+        ParticleData _particleData = new ParticleData();
+
+        private OpenGL m_openGL = new OpenGL();
+        private ParticleData m_particleData = new ParticleData();
+        private ParticleLocation m_particleLocation = null;
+
+        private ColorRGBA m_ColorRGBAStart = new ColorRGBA();
+        private ColorRGBA m_ColorRGBAFinish = new ColorRGBA();
+        private ColorRGBA m_ColorMove = new ColorRGBA();
+        private float[] m_ParticleSection = new float[6];
+
+        private float m_fLifeTime = 0.0f;
+
+        public ParticleEngine(OpenGL _openGL)
+        {
+            m_particleLocation = new ParticleLocation();
+            m_openGL = _openGL;
+        }
+
+        public void Draw(ref ParticleData _particleData, Texture _texture)
+        {
+            m_particleData = _particleData;
+            
+            _texture.Bind(m_openGL);
+
+            if (m_fLifeTime < (m_particleData.Lifespan * 0.7f))
+                m_openGL.Color(m_particleData.ColorStartR, m_particleData.ColorStartG, m_particleData.ColorStartB, m_particleData.ColorStartA - m_ColorMove.ColorA);
+            else
+                m_openGL.Color(m_particleData.ColorFinishR, m_particleData.ColorFinishG, m_particleData.ColorFinishB, m_particleData.ColorFinishA - m_ColorMove.ColorA);
+
+            m_openGL.TexCoord(1.0f, 0.0f); m_openGL.Vertex(m_particleLocation.UpX, m_particleLocation.UpY, 0);
+            m_openGL.TexCoord(0.0f, 0.0f); m_openGL.Vertex(m_particleLocation.DownX, m_particleLocation.UpY, 0);
+            m_openGL.TexCoord(0.0f, 1.0f); m_openGL.Vertex(m_particleLocation.DownX, m_particleLocation.DownY, 0);
+            m_openGL.TexCoord(1.0f, 1.0f); m_openGL.Vertex(m_particleLocation.UpX, m_particleLocation.DownY, 0);
+            
+        }
+
+
+        public void Update(float _fLifeTime, float _fParticleMove, float _fParticleStart) //Engine Update
+        {
+            ParticleColor();
+            ParticleMove(_fParticleMove, false);
+            ParticleDead(_fLifeTime, _fParticleStart);
+        }
+
+////////////////////////////////////
+
+        public void ParticleColor()
+        {
+            m_ColorRGBAStart.ColorR = m_particleData.ColorStartR;
+            m_ColorRGBAStart.ColorG = m_particleData.ColorStartG;
+            m_ColorRGBAStart.ColorB = m_particleData.ColorStartB;
+            m_ColorRGBAStart.ColorA = m_particleData.ColorStartA;
+        }
+        public void ParticleMove(float _fParticleMove, bool _bInit)
+        {
+            if (!_bInit)
+            {
+                float fMove = _fParticleMove / 10000.0f;
+                m_particleLocation.UpY += fMove;
+                m_particleLocation.DownY += fMove;
+
+                m_particleLocation.DownY += 0.04f;
+                m_particleLocation.DownX += 0.02f;
+                m_particleLocation.UpX -= 0.02f;
+
+                m_ColorMove.ColorA += 0.04f;
+
+            }
+            else
+            {
+                SetEngineInit(_fParticleMove);
+            }
+        }
+
+        public void ParticleDead(float _fLifeTime, float _fParticleStart)
+        {
+            if (_fLifeTime == 0.0f)
+            {
+                _fLifeTime = 0.1f;
+            }
+
+            SetLifeTime(_fLifeTime);
+
+            if ((m_fLifeTime > m_particleData.Lifespan))// || (m_particleLocation.DownY > (m_particleData.Lifespan * 0.1f)))
+            {
+                SetEngineInit(_fParticleStart);
+            }
+        }
+
+
+
+/////////////////////////////////////
+        //public void SetSection()
+        //{
+        //    m_ParticleSection[0] = (m_particleData.Lifespan / 10.0f) * 5;
+        //    m_ParticleSection[1] = (m_particleData.Lifespan / 10.0f) * 6;
+        //    m_ParticleSection[2] = (m_particleData.Lifespan / 10.0f) * 7;
+        //    m_ParticleSection[3] = (m_particleData.Lifespan / 10.0f) * 8;
+        //    m_ParticleSection[4] = (m_particleData.Lifespan / 10.0f) * 9;
+        //    m_ParticleSection[5] = (m_particleData.Lifespan / 10.0f) * 10;
+        //}
+
+        public void SetLifeTime(float _fLifeTime)
+        {
+            m_fLifeTime += _fLifeTime;
+        }
+
+        public void SetStartColor(float _fR, float _fG, float _fB, float _fA)
+        {
+            m_ColorRGBAStart.ColorR = _fR;
+            m_ColorRGBAStart.ColorG = _fG;
+            m_ColorRGBAStart.ColorB = _fB;
+            m_ColorRGBAStart.ColorA = _fA;
+        }
+
+        public void SetEngineInit(float _fInitData)
+        {
+            float fMove = (_fInitData * m_particleData.Lifespan) / 100.0f;//_fInitData / 1000.0f;
+            m_particleLocation.UpY = fMove;
+            m_particleLocation.DownY = fMove - 0.4f;
+
+            m_particleLocation.UpX = 0.2f;
+            m_particleLocation.DownX = -0.2f;
+
+            m_fLifeTime = 0;
+
+            m_ColorMove.ColorA = 0.0f;
+        }
+
         
+        ////////////
 
-        public ParticleEngine(OpenGL _openGL, float _fStartPoint)
+        public class ColorRGBA
         {
-            openGL = _openGL;
-
-            Random rnd = new Random(System.DateTime.Now.Millisecond);
-
-            upPoint = new UpPoint(_fStartPoint);
-            downPoint = new DownPoint(upPoint.Y);
-
-        }
-
-        public void Draw(ref ParticleData _particleData, ref Texture _texture)
-        {
-            _texture.Bind(openGL);
-
-            float fCurrentAlpha = 1.0f - upPoint.Y;
-
-            openGL.Color(_particleData.ColorStartR, _particleData.ColorStartG, _particleData.ColorStartB, fCurrentAlpha);//_particleData.ColorStartA);
-
-            openGL.TexCoord(1.0f, 1.0f); openGL.Vertex(upPoint.X, upPoint.Y, 0);
-            openGL.TexCoord(0.0f, 1.0f); openGL.Vertex(downPoint.X, upPoint.Y, 0);
-            openGL.TexCoord(0.0f, 0.0f); openGL.Vertex(downPoint.X, downPoint.Y, 0);
-            openGL.TexCoord(1.0f, 0.0f); openGL.Vertex(upPoint.X, downPoint.Y, 0);
-        }
-        public void Update()
-        {
-            Random rnd = new Random(System.DateTime.Now.Millisecond);
-            float fRand = (float)(rnd.Next() % 500.0f);
-            fRand = fRand / 5000.0f;
-
-            upPoint.Y += fRand;
-            downPoint.Y += fRand;
-
-            if (upPoint.Y > 1.0f)
+            public ColorRGBA()
             {
-                ParticleDead();
+                R = 0.0f;
+                G = 0.0f;
+                B = 0.0f;
+                A = 0.0f;
+            }
+
+            private float R;
+            public float ColorR
+            {
+                get { return R; }
+                set { R = value; }
+            }
+            private float G;
+            public float ColorG
+            {
+                get { return G; }
+                set { G = value; }
+            }
+            private float B;
+            public float ColorB
+            {
+                get { return B; }
+                set { B = value; }
+            }
+            private float A;
+            public float ColorA
+            {
+                get { return A; }
+                set { A = value; }
             }
         }
-        public void ParticleDead()
+        public class ParticleLocation
         {
-            Random rnd = new Random(System.DateTime.Now.Millisecond);
-            float fRnd = rnd.Next(0, 1000) / 1000;
-
-            upPoint.Y = fRnd;
-            downPoint.Y = fRnd - 0.4f;
-        }
-
-        public class UpPoint
-        {
-            private float PointX;
-            public float X
+            private float UpPointX;
+            public float UpX
             {
-                get { return PointX; }
-                set { PointX = value; }
+                get { return UpPointX; }
+                set { UpPointX = value; }
             }
 
-            private float PointY;
-            public float Y
+            private float UpPointY;
+            public float UpY
             {
-                get { return PointY; }
-                set { PointY = value; }
+                get { return UpPointY; }
+                set { UpPointY = value; }
             }
 
-            public UpPoint(float _fDistance)
+            private float DownPointX;
+            public float DownX
             {
-                PointX = 0.2f;
-                PointY = _fDistance;
-            }
-        }
-        public class DownPoint
-        {
-            private float PointX;
-            public float X
-            {
-                get { return PointX; }
-                set { PointX = value; }
+                get { return DownPointX; }
+                set { DownPointX = value; }
             }
 
-            private float PointY;
-            public float Y
+            private float DownPointY;
+            public float DownY
             {
-                get { return PointY; }
-                set { PointY = value; }
+                get { return DownPointY; }
+                set { DownPointY = value; }
             }
 
-            public DownPoint(float _fDistance)
+            public ParticleLocation()
             {
-                PointX = -0.2f;
-                PointY = _fDistance - 0.4f;
+                UpPointX = 0.2f;
+                UpPointY = 0.2f;
+                DownPointX = -0.2f;
+                DownPointY = -0.2f;
             }
+
         }
     }
 
@@ -198,14 +517,17 @@ namespace ParticleEditor
     {
         public ParticleData()
         {
-            texture = "Circle";
+            particleInit = false;
+            textureInit = false;
+
+            texture = "img_SampleCircle.png";
             backgroundr = 0.0f;
             backgroundg = 0.0f;
             backgroundb = 0.0f;
 
             emittertype = "Gravity";
-            maxparticles = 0.0f;
-            lifespan = 0.0f;
+            maxparticles = 50;
+            lifespan = 5.0f;
             lifespanvariance = 0.0f;
             startsize = 0.0f;
             startsizevariance = 0.0f;
@@ -237,11 +559,11 @@ namespace ParticleEditor
             colorstartr = 1.0f;
             colorstartg = 0.2f;
             colorstartb = 0.0f;
-            colorstarta = 1.0f;
-            colorfinishr = 0.0f;
-            colorfinishg = 0.0f;
+            colorstarta = 0.5f;
+            colorfinishr = 1.0f;
+            colorfinishg = 0.2f;
             colorfinishb = 0.0f;
-            colorfinisha = 0.0f;
+            colorfinisha = 0.5f;
 
             colorstartvarr = 0.0f;
             colorstartvarg = 0.0f;
@@ -255,8 +577,26 @@ namespace ParticleEditor
             dest = "One";
         }
 
-        private float maxparticles;
-        public float MaxParticles
+        ///////////////
+
+        private bool particleInit;
+        public bool ParticleInit
+        {
+            get { return particleInit; }
+            set { particleInit = value; }
+        }
+
+        private bool textureInit;
+        public bool TextureInit
+        {
+            get { return textureInit; }
+            set { textureInit = value; }
+        }
+        
+        ////////////
+        
+        private int maxparticles;
+        public int MaxParticles
         {
             get { return maxparticles; }
             set { maxparticles = value; }

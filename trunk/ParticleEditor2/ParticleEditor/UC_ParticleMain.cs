@@ -14,7 +14,7 @@ namespace ParticleEditor
         UC_ParticleControl m_UC_ParticleControl = null;
         UC_ParticleView m_UC_ParticleView = null;
 
-        ImageList m_ilSample = new ImageList();
+        List<Image> m_ltImage = new List<Image>();
 
         public UC_ParticleMain()
         {
@@ -28,12 +28,12 @@ namespace ParticleEditor
             m_UC_ParticleView.Dock = DockStyle.Fill;
             m_UC_ParticleView.Parent = this.pnView;
 
-            m_ilSample.Images.Add(ParticleEditor.Properties.Resources.img_SampleCircle);
-            m_ilSample.Images.Add(ParticleEditor.Properties.Resources.img_SampleStart);
-            m_ilSample.Images.Add(ParticleEditor.Properties.Resources.img_SampleBlob);
-            m_ilSample.Images.Add(ParticleEditor.Properties.Resources.img_SampleHeart);
+            m_ltImage.Add(ParticleEditor.Properties.Resources.img_SampleCircle);
+            m_ltImage.Add(ParticleEditor.Properties.Resources.img_SampleStart);
+            m_ltImage.Add(ParticleEditor.Properties.Resources.img_SampleBlob);
+            m_ltImage.Add(ParticleEditor.Properties.Resources.img_SampleHeart);
 
-            m_UC_ParticleControl.SetTextuerImage(m_ilSample.Images[0]);
+            m_UC_ParticleControl.SetTextuerImage(m_ltImage[0]);
             //ilSample.Images.Add(n);
         }
 
@@ -50,8 +50,9 @@ namespace ParticleEditor
         {
             m_UC_ParticleView.SetBackB(_fBackB);
         }
-        internal void SetViewTexture(string _szTexture)
+        internal void SetViewTexture(string _szTexture, int _iIndex)
         {
+            m_UC_ParticleControl.SetTextuerImage(m_ltImage[_iIndex]);
             m_UC_ParticleView.SetTexture(_szTexture);
         }
 

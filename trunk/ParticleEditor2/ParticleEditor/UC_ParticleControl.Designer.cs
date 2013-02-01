@@ -1705,9 +1705,9 @@
             this.label29.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label29.Location = new System.Drawing.Point(4, 18);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(68, 14);
+            this.label29.Size = new System.Drawing.Size(130, 14);
             this.label29.TabIndex = 0;
-            this.label29.Text = "PARTICLES";
+            this.label29.Text = "PARTICLES BEHAVIOR";
             // 
             // tabPage4
             // 

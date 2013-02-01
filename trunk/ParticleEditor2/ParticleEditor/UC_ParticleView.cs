@@ -23,9 +23,8 @@ namespace ParticleEditor
             InitializeComponent();
 
             OpenGL gl = openGLControl.OpenGL;
-            m_Particle = new Particle(gl, 40);
-            
-            m_Particle.SetTexture();
+            m_Particle = new Particle(gl);
+
         }
 
         private void openGLControl_SizeChanged(object sender, EventArgs e)
@@ -88,32 +87,26 @@ namespace ParticleEditor
         
         private void openGLControl_OpenGLDraw(object sender, PaintEventArgs e)
         {
+            if (m_Particle.particleData.TextureInit)
+                m_Particle.SetTexture(m_Particle.particleData.Texture);
+            
             OpenGL gl = openGLControl.OpenGL;
+            gl.ClearColor(m_Particle.particleData.BackgroundR, m_Particle.particleData.BackgroundG, m_Particle.particleData.BackgroundB, 1.0f);
 
             gl.LoadIdentity();
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
- 
             gl.PushMatrix();
+            
             gl.Begin(OpenGL.GL_QUADS);
 
             m_Particle.Draw();
             m_Particle.Update();
+
             gl.End();
             gl.PopMatrix();
         }
 
-        //TEST부분
-
-
-
-
-        ////////////////////////////////
-        
-
-        ////////////////////////////////
-
-
-
+  
         /// <summary>
         /// Handles the OpenGLInitialized event of the openGLControl control.
         /// </summary>
@@ -144,12 +137,6 @@ namespace ParticleEditor
         {
             
         }
-        
-
-
-
-
-
 
         //DataSetting
         //Tab01 4
@@ -159,15 +146,16 @@ namespace ParticleEditor
         }
         internal void SetBackG(float _fBackG)
         {
-            //ParticleData.BackgroundG = _fBackG; 
+            m_Particle.particleData.BackgroundG = _fBackG; 
         }
         internal void SetBackB(float _fBackB)
         {
-            //ParticleData.BackgroundB = _fBackB;
+            m_Particle.particleData.BackgroundB = _fBackB;
         }
         internal void SetTexture(string _szTexture)
         {
-            //ParticleData.Texture = _szTexture;
+            m_Particle.particleData.TextureInit = true;
+            m_Particle.particleData.Texture = _szTexture;
         }
 
         //Tab02 14
@@ -177,11 +165,12 @@ namespace ParticleEditor
         }
         internal void SetMaxParticles(float _fMaxParticles)
         {
-            //ParticleData.MaxParticles = _fMaxParticles;
+            m_Particle.particleData.MaxParticles = (int)_fMaxParticles;
+            m_Particle.particleData.ParticleInit = true;
         }
         internal void SetBarToBoxLifespan(float _fLifespan)
         {
-            //ParticleData.Lifespan = _fLifespan;
+            m_Particle.particleData.Lifespan = _fLifespan;
         }
         internal void SetLifespanVar(float _fLifespanVar)
         {
@@ -309,19 +298,19 @@ namespace ParticleEditor
         }
         internal void SetFinishR(float _fFinishR)
         {
-            //ParticleData.ColorFinishVarR = _fFinishR;
+            m_Particle.particleData.ColorFinishR = _fFinishR;
         }
         internal void SetFinishG(float _fFinishG)
         {
-            //ParticleData.ColorFinishVarG = _fFinishG;
+            m_Particle.particleData.ColorFinishG = _fFinishG;
         }
         internal void SetFinishB(float _fFinishB)
         {
-            //ParticleData.ColorFinishVarB = _fFinishB;
+            m_Particle.particleData.ColorFinishB = _fFinishB;
         }
         internal void SetFinishA(float _fFinishA)
         {
-            //ParticleData.ColorFinishVarA = _fFinishA;
+            m_Particle.particleData.ColorFinishA = _fFinishA;
         }
 
         //Tab05

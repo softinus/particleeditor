@@ -19,6 +19,8 @@ namespace ParticleEditor
         }
         private void ControlInit()
         {
+            trbMaxParticles.Value = 500;
+
             cbSelectTexture.SelectedIndex = 0;
             cbEmitter.SelectedIndex = 0;
             cbTab05Source.SelectedIndex = 0;
@@ -29,7 +31,13 @@ namespace ParticleEditor
             trbStartR.Value = 10;
             trbStartG.Value = 2;
             trbStartB.Value = 0;
-            trbStartA.Value = 10;
+            trbStartA.Value = 5;
+            trbFinishR.Value = 10;
+            trbFinishG.Value = 2;
+            trbFinishB.Value = 0;
+            trbFinishA.Value = 5;
+
+            trbLifespan.Value = 50;
         }
 
         public void SetTextuerImage(Image _imgSample)
@@ -41,21 +49,21 @@ namespace ParticleEditor
         #region
 
         //Tab01
-        private void SetBarToBoxR()
+        private void SetBarToBoxBackR()
         {
             float fData = trbR.Value * 0.1f;
             tbR.Text = string.Format("{0:F1}", (fData));
 
             ((MainForm)this.ParentForm).SetViewBackR(fData);
         }
-        private void SetBarToBoxG()
+        private void SetBarToBoxBackG()
         {
             float fData = trbG.Value * 0.1f;
             tbG.Text = string.Format("{0:F1}", (fData));
 
             ((MainForm)this.ParentForm).SetViewBackG(fData);
         }
-        private void SetBarToBoxB()
+        private void SetBarToBoxBackB()
         {
             float fData = trbB.Value * 0.1f;
             tbB.Text = string.Format("{0:F1}", (fData));
@@ -65,10 +73,17 @@ namespace ParticleEditor
 
         private void SetTexture()
         {
+            int iIndex = cbSelectTexture.SelectedIndex;
             string szData = cbSelectTexture.SelectedItem.ToString();
+            szData = "img_Sample" + szData + ".png";
+
+            if (iIndex == 4)
+            {
+                return;
+            }
 
             if ((MainForm)this.ParentForm != null)
-            ((MainForm)this.ParentForm).SetViewTexture(szData);
+                ((MainForm)this.ParentForm).SetViewTexture(szData, iIndex);
         }
 
         //Tab02
@@ -78,21 +93,23 @@ namespace ParticleEditor
             string szData = cbEmitter.SelectedItem.ToString();
 
             if ((MainForm)this.ParentForm != null)
-            ((MainForm)this.ParentForm).SetViewEmitterType(szData);
+                ((MainForm)this.ParentForm).SetViewEmitterType(szData);
         }
         private void SetBarToBoxMaxParticles()
         {
             float fData = trbMaxParticles.Value * 0.1f;
-            tbMaxParticles.Text = string.Format("{0:F1}", (fData));
+            tbMaxParticles.Text = ((int)fData).ToString();
 
-            ((MainForm)this.ParentForm).SetViewMaxParticles(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewMaxParticles(fData);
         }
         private void SetBarToBoxLifespan()
         {
             float fData = trbLifespan.Value * 0.1f;
             tbLifespan.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewLifespan(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewLifespan(fData); //LifeSpan
         }
         private void SetBarToBoxLifespanVar()
         {
@@ -322,28 +339,32 @@ namespace ParticleEditor
             float fData = trbFinishR.Value * 0.1f;
             tbFinishR.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewFinishR(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewFinishR(fData);
         }
         private void SetBarToBoxFinishG()
         {
             float fData = trbFinishG.Value * 0.1f;
             tbFinishG.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewFinishG(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewFinishG(fData);
         }
         private void SetBarToBoxFinishB()
         {
             float fData = trbFinishB.Value * 0.1f;
             tbFinishB.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewFinishB(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewFinishB(fData);
         }
         private void SetBarToBoxFinishA()
         {
             float fData = trbFinishA.Value * 0.1f;
             tbFinishA.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewFinishA(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewFinishA(fData);
         }
 
         //Tab05
@@ -440,18 +461,18 @@ namespace ParticleEditor
         //Tab01 Event
         private void trbR_ValueChanged(object sender, EventArgs e)
         {
-            SetBarToBoxR();
+            SetBarToBoxBackR();
             
         }
 
         private void trbG_ValueChanged(object sender, EventArgs e)
         {
-            SetBarToBoxG();
+            SetBarToBoxBackG();
         }
 
         private void trbB_ValueChanged(object sender, EventArgs e)
         {
-            SetBarToBoxB();
+            SetBarToBoxBackB();
         }
 
         //Tab02 Event
