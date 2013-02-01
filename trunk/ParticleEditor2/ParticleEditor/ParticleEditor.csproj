@@ -178,6 +178,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="img_main_icon.ico" />
+    <None Include="Resources\img_About_nor.jpg" />
+    <None Include="Resources\img_About_over.jpg" />
     <Content Include="Resources\img_main_icon.ico" />
     <None Include="Resources\img_SampleStart.png" />
     <None Include="Resources\img_SampleHeart.png" />

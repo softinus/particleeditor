@@ -60,6 +60,20 @@ namespace ParticleEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap img_About_nor {
+            get {
+                object obj = ResourceManager.GetObject("img_About_nor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap img_About_over {
+            get {
+                object obj = ResourceManager.GetObject("img_About_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap img_close_nor {
             get {
                 object obj = ResourceManager.GetObject("img_close_nor", resourceCulture);
