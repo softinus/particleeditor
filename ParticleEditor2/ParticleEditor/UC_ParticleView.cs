@@ -178,7 +178,7 @@ namespace ParticleEditor
         }
         internal void SetStartSize(float _fStartSize)
         {
-            //ParticleData.StartSize = _fStartSize;
+            m_Particle.particleData.StartSize = _fStartSize;
         }
         internal void SetStartSizeVar(float _fStartSizeVar)
         {
@@ -186,7 +186,7 @@ namespace ParticleEditor
         }
         internal void SetFinishSize(float _fFinishSize)
         {
-            //ParticleData.FinishSize = _fFinishSize;
+            m_Particle.particleData.FinishSize = _fFinishSize;
         }
         internal void SetFinishSizeVar(float _fFinishSizeVar)
         {

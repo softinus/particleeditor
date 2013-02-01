@@ -81,10 +81,10 @@ namespace ParticleEditor
             foreach (ParticleEngine particle in particles)
             {
                 int iMinLife = 500;
-                int iMaxLife = 2000; //
+                int iMaxLife = 3000; //
 
                 int iMinMove = 500;
-                int iMaxMove = 1000;
+                int iMaxMove = 1500;
 
                 int iMinStart = 0;
                 int iMaxStart = 3;
@@ -92,7 +92,7 @@ namespace ParticleEditor
                 float fLife = rndParticleLife.Next(iMinLife, iMaxLife) / 1000.0f;
                 float fMove = rndParticleRepeat.Next(iMinMove, iMaxMove);
                 float fStart = rndParticleStart.Next(iMinStart, iMaxStart);
-                
+
                 particle.Update(fLife, fMove, fStart);
             }
 
@@ -307,18 +307,17 @@ namespace ParticleEditor
 
         private OpenGL m_openGL = new OpenGL();
         private ParticleData m_particleData = new ParticleData();
-        private ParticleLocation m_particleLocation = null;
+        private ParticleLocation m_particleLocation = new ParticleLocation();
 
         private ColorRGBA m_ColorRGBAStart = new ColorRGBA();
         private ColorRGBA m_ColorRGBAFinish = new ColorRGBA();
         private ColorRGBA m_ColorMove = new ColorRGBA();
+ 
         private float[] m_ParticleSection = new float[6];
-
         private float m_fLifeTime = 0.0f;
 
         public ParticleEngine(OpenGL _openGL)
         {
-            m_particleLocation = new ParticleLocation();
             m_openGL = _openGL;
         }
 
@@ -340,15 +339,19 @@ namespace ParticleEditor
             
         }
 
-
         public void Update(float _fLifeTime, float _fParticleMove, float _fParticleStart) //Engine Update
         {
             ParticleColor();
+            ParticleSize();
             ParticleMove(_fParticleMove, false);
             ParticleDead(_fLifeTime, _fParticleStart);
         }
 
 ////////////////////////////////////
+        public void ParticleSize()
+        {
+
+        }
 
         public void ParticleColor()
         {
@@ -357,6 +360,7 @@ namespace ParticleEditor
             m_ColorRGBAStart.ColorB = m_particleData.ColorStartB;
             m_ColorRGBAStart.ColorA = m_particleData.ColorStartA;
         }
+
         public void ParticleMove(float _fParticleMove, bool _bInit)
         {
             if (!_bInit)
@@ -365,11 +369,14 @@ namespace ParticleEditor
                 m_particleLocation.UpY += fMove;
                 m_particleLocation.DownY += fMove;
 
-                m_particleLocation.DownY += 0.04f;
-                m_particleLocation.DownX += 0.02f;
-                m_particleLocation.UpX -= 0.02f;
+                m_particleLocation.SetSize(m_particleData.StartSize, m_particleData.FinishSize);
+                m_particleLocation.GetSizeModify(m_particleData.Lifespan);
 
-                m_ColorMove.ColorA += 0.04f;
+                m_particleLocation.DownY += m_particleLocation.ParticleSize * 2.0f;
+                m_particleLocation.DownX += m_particleLocation.ParticleSize;
+                m_particleLocation.UpX -= m_particleLocation.ParticleSize;
+
+                //m_ColorMove.ColorA += 0.04f;
 
             }
             else
@@ -377,7 +384,6 @@ namespace ParticleEditor
                 SetEngineInit(_fParticleMove);
             }
         }
-
         public void ParticleDead(float _fLifeTime, float _fParticleStart)
         {
             if (_fLifeTime == 0.0f)
@@ -393,24 +399,13 @@ namespace ParticleEditor
             }
         }
 
-
-
 /////////////////////////////////////
-        //public void SetSection()
-        //{
-        //    m_ParticleSection[0] = (m_particleData.Lifespan / 10.0f) * 5;
-        //    m_ParticleSection[1] = (m_particleData.Lifespan / 10.0f) * 6;
-        //    m_ParticleSection[2] = (m_particleData.Lifespan / 10.0f) * 7;
-        //    m_ParticleSection[3] = (m_particleData.Lifespan / 10.0f) * 8;
-        //    m_ParticleSection[4] = (m_particleData.Lifespan / 10.0f) * 9;
-        //    m_ParticleSection[5] = (m_particleData.Lifespan / 10.0f) * 10;
-        //}
+       
 
         public void SetLifeTime(float _fLifeTime)
         {
             m_fLifeTime += _fLifeTime;
         }
-
         public void SetStartColor(float _fR, float _fG, float _fB, float _fA)
         {
             m_ColorRGBAStart.ColorR = _fR;
@@ -418,23 +413,22 @@ namespace ParticleEditor
             m_ColorRGBAStart.ColorB = _fB;
             m_ColorRGBAStart.ColorA = _fA;
         }
-
         public void SetEngineInit(float _fInitData)
         {
-            float fMove = (_fInitData * m_particleData.Lifespan) / 100.0f;//_fInitData / 1000.0f;
-            m_particleLocation.UpY = fMove;
-            m_particleLocation.DownY = fMove - 0.4f;
+            float fMove = (_fInitData * m_particleData.Lifespan) / 100.0f;
 
-            m_particleLocation.UpX = 0.2f;
-            m_particleLocation.DownX = -0.2f;
+            m_particleLocation.UpY = fMove;
+            m_particleLocation.DownY = fMove - (m_particleData.StartSize * 2);
+            m_particleLocation.UpX = m_particleData.StartSize;
+            m_particleLocation.DownX = -m_particleData.StartSize;
 
             m_fLifeTime = 0;
 
             m_ColorMove.ColorA = 0.0f;
+
+
         }
 
-        
-        ////////////
 
         public class ColorRGBA
         {
@@ -501,14 +495,59 @@ namespace ParticleEditor
                 set { DownPointY = value; }
             }
 
-            public ParticleLocation()
+            private float startsize;
+            public float StartSize
             {
-                UpPointX = 0.2f;
-                UpPointY = 0.2f;
-                DownPointX = -0.2f;
-                DownPointY = -0.2f;
+                get { return startsize; }
+                set { startsize = value; }
             }
 
+            private float endsize;
+            public float EndSize
+            {
+                get { return endsize; }
+                set { endsize = value; }
+            }
+
+
+            private float particlesize;
+            public float ParticleSize
+            {
+                get { return particlesize; }
+                set { particlesize = value; }
+            }
+
+            public ParticleLocation()
+            {
+
+            }
+
+            public void SetSize(float _fStart, float _fEnd)
+            {
+                startsize = _fStart;
+                endsize = _fEnd;
+            }
+            public void GetSizeModify(float _fDivide) // LifeTime 단위, 하나의 파티클 = 평균 life 단위 정도 루프
+            {
+                float fSize = 0.0f;
+                bool bMark = true; // true +, false -
+
+                if (startsize > endsize)
+                {
+                    fSize = (startsize - endsize) / _fDivide;
+                    bMark = true;
+                }
+                else
+                {
+                    fSize = (endsize - startsize) / _fDivide;
+                    bMark = false;
+                }
+
+                if (!bMark)
+                    fSize = -fSize;
+
+                particlesize = fSize;
+            }
         }
     }
 
@@ -527,9 +566,9 @@ namespace ParticleEditor
 
             emittertype = "Gravity";
             maxparticles = 50;
-            lifespan = 5.0f;
+            lifespan = 5.0f * 1.5f;
             lifespanvariance = 0.0f;
-            startsize = 0.0f;
+            startsize = 0.2f;
             startsizevariance = 0.0f;
             finishsize = 0.0f;
             finishsizevariance = 0.0f;

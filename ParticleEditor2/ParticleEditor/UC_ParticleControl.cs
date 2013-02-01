@@ -37,6 +37,9 @@ namespace ParticleEditor
             trbFinishB.Value = 0;
             trbFinishA.Value = 5;
 
+            trbStartSize.Value = 200;
+            trbFinishSize.Value = 0;
+
             trbLifespan.Value = 50;
         }
 
@@ -86,8 +89,6 @@ namespace ParticleEditor
                 ((MainForm)this.ParentForm).SetViewTexture(szData, iIndex);
         }
 
-        //Tab02
-        
         private void SetEmitter()
         {
             string szData = cbEmitter.SelectedItem.ToString();
@@ -109,7 +110,7 @@ namespace ParticleEditor
             tbLifespan.Text = string.Format("{0:F1}", (fData));
 
             if ((MainForm)this.ParentForm != null)
-                ((MainForm)this.ParentForm).SetViewLifespan(fData); //LifeSpan
+                ((MainForm)this.ParentForm).SetViewLifespan(fData * 1.5f); //LifeSpan
         }
         private void SetBarToBoxLifespanVar()
         {
@@ -123,33 +124,37 @@ namespace ParticleEditor
             float fData = trbStartSize.Value * 0.1f;
             tbStartSize.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewLifespanVar(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewStartSize(fData * 0.01f);
         }
         private void SetBarToBoxStartSizeVar()
         {
             float fData = trbStartSizeVar.Value * 0.1f;
             tbStartSizeVar.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartSizeVar(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewStartSizeVar(fData);
         }
         private void SetBarToBoxFinishSize()
         {
             float fData = trbFinishSize.Value * 0.1f;
             tbFinishSize.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartSize(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewFinishSize(fData * 0.01f);
         }
         private void SetBarToBoxFinishSizeVar()
         {
             float fData = trbFinishSizeVar.Value * 0.1f;
             tbFinishSizeVar.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewStartSize(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewFinishSizeVar(fData);
         }
         private void SetBarToBoxEmitterAngle()
         {
             float fData = trbEmitter.Value * 0.1f;
-            tbFinishSizeVar.Text = string.Format("{0:F1}", (fData));
+            tbEmitter.Text = string.Format("{0:F1}", (fData));
 
             ((MainForm)this.ParentForm).SetViewEmitterAngle(fData);
         }
