@@ -72,8 +72,10 @@ namespace ParticleEditor
                 particle.Draw(ref particleData, texture);
         }
 
-        public void Update()
+        public void Update(ref OpenGL _gl)
         {
+            _gl.Rotate(particleData.EmitterAngle, 0, 0, 1);
+
             Random rndParticleLife = new Random();
             Random rndParticleRepeat = new Random();
             Random rndParticleStart = new Random();
@@ -308,11 +310,8 @@ namespace ParticleEditor
         private OpenGL m_openGL = new OpenGL();
         private ParticleData m_particleData = new ParticleData();
         private ParticleLocation m_particleLocation = new ParticleLocation();
+        private ParticalColor m_ParticalColor = new ParticalColor();
 
-        private ColorRGBA m_ColorRGBAStart = new ColorRGBA();
-        private ColorRGBA m_ColorRGBAFinish = new ColorRGBA();
-        private ColorRGBA m_ColorMove = new ColorRGBA();
- 
         private float[] m_ParticleSection = new float[6];
         private float m_fLifeTime = 0.0f;
 
@@ -327,10 +326,12 @@ namespace ParticleEditor
             
             _texture.Bind(m_openGL);
 
-            if (m_fLifeTime < (m_particleData.Lifespan * 0.7f))
-                m_openGL.Color(m_particleData.ColorStartR, m_particleData.ColorStartG, m_particleData.ColorStartB, m_particleData.ColorStartA - m_ColorMove.ColorA);
-            else
-                m_openGL.Color(m_particleData.ColorFinishR, m_particleData.ColorFinishG, m_particleData.ColorFinishB, m_particleData.ColorFinishA - m_ColorMove.ColorA);
+            float fColorR = m_particleData.ColorStartR + m_ParticalColor.ModifyR;
+            float fColorG = m_particleData.ColorStartG + m_ParticalColor.ModifyG;
+            float fColorB = m_particleData.ColorStartB + m_ParticalColor.ModifyB;
+            float fColorA = m_particleData.ColorStartA + m_ParticalColor.ModifyA;
+            
+            m_openGL.Color(fColorR, fColorG, fColorB, fColorA);
 
             m_openGL.TexCoord(1.0f, 0.0f); m_openGL.Vertex(m_particleLocation.UpX, m_particleLocation.UpY, 0);
             m_openGL.TexCoord(0.0f, 0.0f); m_openGL.Vertex(m_particleLocation.DownX, m_particleLocation.UpY, 0);
@@ -355,10 +356,8 @@ namespace ParticleEditor
 
         public void ParticleColor()
         {
-            m_ColorRGBAStart.ColorR = m_particleData.ColorStartR;
-            m_ColorRGBAStart.ColorG = m_particleData.ColorStartG;
-            m_ColorRGBAStart.ColorB = m_particleData.ColorStartB;
-            m_ColorRGBAStart.ColorA = m_particleData.ColorStartA;
+            m_ParticalColor.SetColor(m_particleData);
+            m_ParticalColor.SetColorModify(m_particleData.Lifespan);
         }
 
         public void ParticleMove(float _fParticleMove, bool _bInit)
@@ -370,7 +369,7 @@ namespace ParticleEditor
                 m_particleLocation.DownY += fMove;
 
                 m_particleLocation.SetSize(m_particleData.StartSize, m_particleData.FinishSize);
-                m_particleLocation.GetSizeModify(m_particleData.Lifespan);
+                m_particleLocation.SetSizeModify(m_particleData.Lifespan);
 
                 m_particleLocation.DownY += m_particleLocation.ParticleSize * 2.0f;
                 m_particleLocation.DownX += m_particleLocation.ParticleSize;
@@ -406,13 +405,6 @@ namespace ParticleEditor
         {
             m_fLifeTime += _fLifeTime;
         }
-        public void SetStartColor(float _fR, float _fG, float _fB, float _fA)
-        {
-            m_ColorRGBAStart.ColorR = _fR;
-            m_ColorRGBAStart.ColorG = _fG;
-            m_ColorRGBAStart.ColorB = _fB;
-            m_ColorRGBAStart.ColorA = _fA;
-        }
         public void SetEngineInit(float _fInitData)
         {
             float fMove = (_fInitData * m_particleData.Lifespan) / 100.0f;
@@ -424,46 +416,154 @@ namespace ParticleEditor
 
             m_fLifeTime = 0;
 
-            m_ColorMove.ColorA = 0.0f;
-
-
+            m_ParticalColor.SetColorInit();
         }
 
 
-        public class ColorRGBA
+        public class ParticalColor
         {
-            public ColorRGBA()
+            ParticleData m_ParticleData = new ParticleData();
+
+            public ParticalColor()
             {
-                R = 0.0f;
-                G = 0.0f;
-                B = 0.0f;
-                A = 0.0f;
+                startr = m_ParticleData.ColorStartR;
+                startg = m_ParticleData.ColorStartG;
+                startb = m_ParticleData.ColorStartB;
+                starta = m_ParticleData.ColorStartA;
+
+                finishr = m_ParticleData.ColorFinishR;
+                finishg = m_ParticleData.ColorFinishG;
+                finishb = m_ParticleData.ColorFinishB;
+                finisha = m_ParticleData.ColorFinishA;
+
+                modifyr = 0.0f;
+                modifya = 0.0f;
+                modifyb = 0.0f;
+                modifyg = 0.0f;
             }
 
-            private float R;
-            public float ColorR
+            public void SetColor(ParticleData _particleData)
             {
-                get { return R; }
-                set { R = value; }
+                startr = _particleData.ColorStartR;
+                startg = _particleData.ColorStartG;
+                startb = _particleData.ColorStartB;
+                starta = _particleData.ColorStartA;
+
+                finishr = _particleData.ColorFinishR;
+                finishg = _particleData.ColorFinishG;
+                finishb = _particleData.ColorFinishB;
+                finisha = _particleData.ColorFinishA;
             }
-            private float G;
-            public float ColorG
+
+            public void SetColorModify(float _fDivide)
             {
-                get { return G; }
-                set { G = value; }
+                float fSizeR = (Math.Abs(startr - finishr) / _fDivide) * 1.5f;
+                float fSizeG = (Math.Abs(startg - finishg) / _fDivide) * 1.5f;
+                float fSizeB = (Math.Abs(startb - finishb) / _fDivide) * 1.5f;           
+                float fSizeA = (Math.Abs(starta - finisha) / _fDivide);
+
+                if (startr > finishr)
+                    fSizeR = -fSizeR;
+
+                if (startg > finishg)
+                    fSizeG = -fSizeG;
+
+                if (startb > finishb)
+                    fSizeB = -fSizeB;
+
+                if (starta > finisha)
+                    fSizeA = -fSizeA;
+
+                modifyr += fSizeR;
+                modifyg += fSizeG;
+                modifyb += fSizeB;
+                modifya += fSizeA;                
             }
-            private float B;
-            public float ColorB
+
+            public void SetColorInit()
             {
-                get { return B; }
-                set { B = value; }
+                modifyr = 0.0f;
+                modifya = 0.0f;
+                modifyb = 0.0f;
+                modifyg = 0.0f;
             }
-            private float A;
-            public float ColorA
+
+            private float modifyr;
+            public float ModifyR
             {
-                get { return A; }
-                set { A = value; }
+                get { return modifyr; }
+                set { modifyr = value; }
             }
+            private float modifyg;
+            public float ModifyG
+            {
+                get { return modifyg; }
+                set { modifyg = value; }
+            }
+            private float modifyb;
+            public float ModifyB
+            {
+                get { return modifyb; }
+                set { modifyb = value; }
+            }
+            private float modifya;
+            public float ModifyA
+            {
+                get { return modifya; }
+                set { modifya = value; }
+            }
+
+            #region 
+            private float startr;
+            public float StartColorR
+            {
+                get { return startr; }
+                set { startr = value; }
+            }
+            private float startg;
+            public float StartColorG
+            {
+                get { return startg; }
+                set { startg = value; }
+            }
+            private float startb;
+            public float StartColorB
+            {
+                get { return startb; }
+                set { startb = value; }
+            }
+            private float starta;
+            public float StartColorA
+            {
+                get { return starta; }
+                set { starta = value; }
+            }
+
+            private float finishr;
+            public float FinishColorR
+            {
+                get { return finishr; }
+                set { finishr = value; }
+            }
+            private float finishg;
+            public float FinishColorG
+            {
+                get { return finishg; }
+                set { finishg = value; }
+            }
+            private float finishb;
+            public float FinishColorB
+            {
+                get { return finishb; }
+                set { finishb = value; }
+            }
+            private float finisha;
+            public float FinishColorA
+            {
+                get { return finisha; }
+                set { finisha = value; }
+            }
+            #endregion
         }
         public class ParticleLocation
         {
@@ -527,7 +627,7 @@ namespace ParticleEditor
                 startsize = _fStart;
                 endsize = _fEnd;
             }
-            public void GetSizeModify(float _fDivide) // LifeTime 단위, 하나의 파티클 = 평균 life 단위 정도 루프
+            public void SetSizeModify(float _fDivide) // LifeTime 단위, 하나의 파티클 = 평균 life 단위 정도 루프
             {
                 float fSize = 0.0f;
                 bool bMark = true; // true +, false -
@@ -602,7 +702,7 @@ namespace ParticleEditor
             colorfinishr = 1.0f;
             colorfinishg = 0.2f;
             colorfinishb = 0.0f;
-            colorfinisha = 0.5f;
+            colorfinisha = 0.0f;
 
             colorstartvarr = 0.0f;
             colorstartvarg = 0.0f;
