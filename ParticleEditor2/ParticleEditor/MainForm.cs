@@ -568,6 +568,26 @@ namespace ParticleEditor
             lbClose.Image = ParticleEditor.Properties.Resources.img_close_nor;
         }
 
+        private void lbAbout_MouseHover(object sender, EventArgs e)
+        {
+            //lbAbout.Image = ParticleEditor.Properties.Resources.img_About_over;
+        }
 
+        private void lbAbout_MouseLeave(object sender, EventArgs e) 
+        {
+            this.Cursor = Cursors.Default;
+            lbAbout.Image = ParticleEditor.Properties.Resources.img_About_nor;
+        }
+
+        private void lbAbout_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            lbAbout.Image = ParticleEditor.Properties.Resources.img_About_over;
+        }
+
+        private void lbAbout_MouseClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("주말에 놀지 말고 개발하자 준혁아!!!!!!!!!!!!!!!!!!ㅋㅋㅋㅋ\n준비중이시다 ㅋㅋㅋ");
+        }
     }
 }

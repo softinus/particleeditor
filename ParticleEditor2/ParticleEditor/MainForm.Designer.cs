@@ -31,6 +31,7 @@
             this.pnMain = new System.Windows.Forms.Panel();
             this.pnCenter = new System.Windows.Forms.Panel();
             this.pnTop = new System.Windows.Forms.Panel();
+            this.lbAbout = new System.Windows.Forms.Label();
             this.pnTopBox = new System.Windows.Forms.Panel();
             this.lbClose = new System.Windows.Forms.Label();
             this.lbMax = new System.Windows.Forms.Label();
@@ -64,6 +65,7 @@
             // 
             this.pnTop.BackColor = System.Drawing.SystemColors.Control;
             this.pnTop.BackgroundImage = global::ParticleEditor.Properties.Resources.img_windowbar1;
+            this.pnTop.Controls.Add(this.lbAbout);
             this.pnTop.Controls.Add(this.pnTopBox);
             this.pnTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnTop.Location = new System.Drawing.Point(3, 3);
@@ -75,6 +77,20 @@
             this.pnTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnTop_MouseDown);
             this.pnTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnTop_MouseMove);
             this.pnTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnTop_MouseUp);
+            // 
+            // lbAbout
+            // 
+            this.lbAbout.BackColor = System.Drawing.Color.Transparent;
+            this.lbAbout.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lbAbout.Image = global::ParticleEditor.Properties.Resources.img_About_nor;
+            this.lbAbout.Location = new System.Drawing.Point(618, 5);
+            this.lbAbout.Name = "lbAbout";
+            this.lbAbout.Size = new System.Drawing.Size(100, 18);
+            this.lbAbout.TabIndex = 11;
+            this.lbAbout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lbAbout_MouseClick);
+            this.lbAbout.MouseLeave += new System.EventHandler(this.lbAbout_MouseLeave);
+            this.lbAbout.MouseHover += new System.EventHandler(this.lbAbout_MouseHover);
+            this.lbAbout.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lbAbout_MouseMove);
             // 
             // pnTopBox
             // 
@@ -157,6 +173,7 @@
         private System.Windows.Forms.Label lbClose;
         private System.Windows.Forms.Label lbMax;
         private System.Windows.Forms.Label lbMin;
+        private System.Windows.Forms.Label lbAbout;
     }
 }
 
