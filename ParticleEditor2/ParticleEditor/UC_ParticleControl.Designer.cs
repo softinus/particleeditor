@@ -719,6 +719,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
+            this.label25.Enabled = false;
             this.label25.Font = new System.Drawing.Font("나눔고딕", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label25.Location = new System.Drawing.Point(5, 367);
             this.label25.Name = "label25";
@@ -738,6 +739,7 @@
             // trbEnd
             // 
             this.trbEnd.AutoSize = false;
+            this.trbEnd.Enabled = false;
             this.trbEnd.Location = new System.Drawing.Point(50, 363);
             this.trbEnd.Maximum = 3600;
             this.trbEnd.Name = "trbEnd";
@@ -782,6 +784,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
+            this.label23.Enabled = false;
             this.label23.Font = new System.Drawing.Font("나눔고딕", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label23.Location = new System.Drawing.Point(5, 309);
             this.label23.Name = "label23";
@@ -801,6 +804,7 @@
             // trbStart
             // 
             this.trbStart.AutoSize = false;
+            this.trbStart.Enabled = false;
             this.trbStart.Location = new System.Drawing.Point(61, 305);
             this.trbStart.Maximum = 3600;
             this.trbStart.Name = "trbStart";

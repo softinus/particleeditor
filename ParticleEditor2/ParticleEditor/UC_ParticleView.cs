@@ -89,19 +89,21 @@ namespace ParticleEditor
         {
             if (m_Particle.particleData.TextureInit)
                 m_Particle.SetTexture(m_Particle.particleData.Texture);
-            
-            OpenGL gl = openGLControl.OpenGL;
-            gl.ClearColor(m_Particle.particleData.BackgroundR, m_Particle.particleData.BackgroundG, m_Particle.particleData.BackgroundB, 1.0f);
 
+            OpenGL gl = openGLControl.OpenGL; 
+            
+            gl.ClearColor(m_Particle.particleData.BackgroundR, m_Particle.particleData.BackgroundG, m_Particle.particleData.BackgroundB, 1.0f);
             gl.LoadIdentity();
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+            
+            m_Particle.Update(ref gl);
+            
+            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT); 
             gl.PushMatrix();
             
             gl.Begin(OpenGL.GL_QUADS);
-
+            
             m_Particle.Draw();
-            m_Particle.Update();
-
+            
             gl.End();
             gl.PopMatrix();
         }
@@ -194,7 +196,7 @@ namespace ParticleEditor
         }
         internal void SetEmitterAngle(float _fEmitterAngle)
         {
-            //ParticleData.EmitterAngle = _fEmitterAngle;
+            m_Particle.particleData.EmitterAngle = _fEmitterAngle;
         }
         internal void SetAngleVar(float _fAngleVar)
         {

@@ -35,7 +35,7 @@ namespace ParticleEditor
             trbFinishR.Value = 10;
             trbFinishG.Value = 2;
             trbFinishB.Value = 0;
-            trbFinishA.Value = 5;
+            trbFinishA.Value = 0;
 
             trbStartSize.Value = 200;
             trbFinishSize.Value = 0;
