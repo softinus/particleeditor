@@ -587,7 +587,9 @@ namespace ParticleEditor
 
         private void lbAbout_MouseClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("주말에 놀지 말고 개발하자 준혁아!!!!!!!!!!!!!!!!!!ㅋㅋㅋㅋ\n준비중이시다 ㅋㅋㅋ");
+            About aboutForm = new About();
+            aboutForm.Show();
+            aboutForm.Location = new Point(this.Location.X + (this.Width / 2) - (aboutForm.Width / 2), this.Location.Y + (this.Height / 2) - (aboutForm.Height / 2));
         }
     }
 }

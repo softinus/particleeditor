@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pnMain = new System.Windows.Forms.Panel();
             this.pnCenter = new System.Windows.Forms.Panel();
             this.pnTop = new System.Windows.Forms.Panel();
@@ -36,6 +37,7 @@
             this.lbClose = new System.Windows.Forms.Label();
             this.lbMax = new System.Windows.Forms.Label();
             this.lbMin = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnMain.SuspendLayout();
             this.pnTop.SuspendLayout();
             this.pnTopBox.SuspendLayout();
@@ -65,6 +67,7 @@
             // 
             this.pnTop.BackColor = System.Drawing.SystemColors.Control;
             this.pnTop.BackgroundImage = global::ParticleEditor.Properties.Resources.img_windowbar1;
+            this.pnTop.Controls.Add(this.label1);
             this.pnTop.Controls.Add(this.lbAbout);
             this.pnTop.Controls.Add(this.pnTopBox);
             this.pnTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -139,6 +142,17 @@
             this.lbMin.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lbMin_MouseMove);
             this.lbMin.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbMin_MouseUp);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(4, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 14);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "ParticleEditor";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -148,6 +162,7 @@
             this.Controls.Add(this.pnMain);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 700);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(2);
@@ -159,6 +174,7 @@
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Main_MouseUp);
             this.pnMain.ResumeLayout(false);
             this.pnTop.ResumeLayout(false);
+            this.pnTop.PerformLayout();
             this.pnTopBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -174,6 +190,7 @@
         private System.Windows.Forms.Label lbMax;
         private System.Windows.Forms.Label lbMin;
         private System.Windows.Forms.Label lbAbout;
+        private System.Windows.Forms.Label label1;
     }
 }
 
