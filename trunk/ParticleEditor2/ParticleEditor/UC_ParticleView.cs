@@ -109,11 +109,9 @@ namespace ParticleEditor
         }
 
   
-        /// <summary>
-        /// Handles the OpenGLInitialized event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+
+        //Handles the OpenGLInitialized event of the openGLControl control.
+
         private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
         {
 
@@ -222,11 +220,11 @@ namespace ParticleEditor
         //Tab03 15
         internal void SetXVariance(float _fXVariance)
         {
-            //ParticleData.XVariance = _fXVariance;
+            m_Particle.particleData.XVariance = _fXVariance;
         }
         internal void SetYVariance(float _fYVariance)
         {
-            //ParticleData.YVariance = _fYVariance;
+            m_Particle.particleData.YVariance = _fYVariance;
         }
         internal void SetSpeed(float _fSpeed)
         {
@@ -238,11 +236,11 @@ namespace ParticleEditor
         }
         internal void SetGravityX(float _fGravityX)
         {
-            //ParticleData.GravityX = _fGravityX;
+            //m_Particle.particleData.GravityX = _fGravityX;
         }
         internal void SetGravityY(float _fGravityY)
         {
-            //ParticleData.GravityY = _fGravityY;
+            //m_Particle.particleData.GravityY = _fGravityY;
         }
         internal void SetTanAcc(float _fTanAcc)
         {

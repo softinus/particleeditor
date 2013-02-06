@@ -76,12 +76,16 @@ namespace ParticleEditor
         {
             openGL.Rotate(particleData.EmitterAngle, 0, 0, 1);
 
+            Random rndParticleYVar = new Random();
             Random rndParticleLife = new Random();
             Random rndParticleRepeat = new Random();
             Random rndParticleStart = new Random();
+            Random rndParticleXVar = new Random();
+            
 
             foreach (ParticleEngine particle in particles)
             {
+               
                 int iMinLife = 500;
                 int iMaxLife = 3000; //
 
@@ -89,13 +93,20 @@ namespace ParticleEditor
                 int iMaxMove = 1500;
 
                 int iMinStart = 0;
-                int iMaxStart = 3;
+                int iMaxStart = 2;
 
+                int iMaxY = (int)particleData.YVariance * 2;
+                int iMaxX = (int)particleData.XVariance * 2;
+
+                
                 float fLife = rndParticleLife.Next(iMinLife, iMaxLife) / 1000.0f;
                 float fMove = rndParticleRepeat.Next(iMinMove, iMaxMove);
                 float fStart = rndParticleStart.Next(iMinStart, iMaxStart);
-
-                particle.Update(fLife, fMove, fStart);
+                int iXVar = rndParticleXVar.Next(0, iMaxX);
+                int iYVar = rndParticleYVar.Next(0, iMaxY);
+                iYVar = rndParticleYVar.Next(0, iMaxY); //C# 랜덤버그
+  
+                particle.Update(fLife, fMove, fStart, iXVar, iYVar);
             }
 
             if (particleData.TextureInit)
@@ -340,12 +351,12 @@ namespace ParticleEditor
             
         }
 
-        public void Update(float _fLifeTime, float _fParticleMove, float _fParticleStart) //Engine Update
+        public void Update(float _fLifeTime, float _fParticleMove, float _fParticleStart, int _iXVar, int _iYVar) //Engine Update
         {
             ParticleColor();
             ParticleSize();
             ParticleMove(_fParticleMove, false);
-            ParticleDead(_fLifeTime, _fParticleStart);
+            ParticleDead(_fLifeTime, _fParticleStart, _iXVar, _iYVar);
         }
 
 ////////////////////////////////////
@@ -374,16 +385,13 @@ namespace ParticleEditor
                 m_particleLocation.DownY += m_particleLocation.ParticleSize * 2.0f;
                 m_particleLocation.DownX += m_particleLocation.ParticleSize;
                 m_particleLocation.UpX -= m_particleLocation.ParticleSize;
-
-                //m_ColorMove.ColorA += 0.04f;
-
             }
             else
             {
-                SetEngineInit(_fParticleMove);
+                SetEngineInit(_fParticleMove, 0, 0);
             }
         }
-        public void ParticleDead(float _fLifeTime, float _fParticleStart)
+        public void ParticleDead(float _fLifeTime, float _fParticleStart, int _iXVar, int _iYVar)
         {
             if (_fLifeTime == 0.0f)
             {
@@ -394,7 +402,7 @@ namespace ParticleEditor
 
             if ((m_fLifeTime > m_particleData.Lifespan))// || (m_particleLocation.DownY > (m_particleData.Lifespan * 0.1f)))
             {
-                SetEngineInit(_fParticleStart);
+                SetEngineInit(_fParticleStart, _iXVar, _iYVar);
             }
         }
 
@@ -405,20 +413,31 @@ namespace ParticleEditor
         {
             m_fLifeTime += _fLifeTime;
         }
-        public void SetEngineInit(float _fInitData)
+        public void SetEngineInit(float _fInitData, int _iXVar, int _iYVar)
         {
+            float fXVar = 0.0f;
+            float fYVar = 0.0f;
+
+            SetGravity(ref fXVar, _iXVar, ref fYVar, _iYVar);
+
             float fMove = (_fInitData * m_particleData.Lifespan) / 100.0f;
 
-            m_particleLocation.UpY = fMove;
-            m_particleLocation.DownY = fMove - (m_particleData.StartSize * 2);
-            m_particleLocation.UpX = m_particleData.StartSize;
-            m_particleLocation.DownX = -m_particleData.StartSize;
+            m_particleLocation.UpY = fMove + fYVar;
+            m_particleLocation.DownY = (fMove - (m_particleData.StartSize * 2)) + fYVar;
+
+            m_particleLocation.UpX = m_particleData.StartSize + fXVar;
+            m_particleLocation.DownX = -m_particleData.StartSize + fXVar;
 
             m_fLifeTime = 0;
 
             m_ParticalColor.SetColorInit();
         }
 
+        private void SetGravity(ref float _fXVar, int _iXVar, ref float _fYVar, int _iYVar)
+        {
+            _fXVar = (_iXVar - m_particleData.XVariance) / 1000.0f;
+            _fYVar = (_iYVar - m_particleData.YVariance) / 1000.0f;
+        }
 
         public class ParticalColor
         {
