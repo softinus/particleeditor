@@ -105,7 +105,8 @@ namespace ParticleEditor
                 int iXVar = rndParticleXVar.Next(0, iMaxX);
                 int iYVar = rndParticleYVar.Next(0, iMaxY);
                 iYVar = rndParticleYVar.Next(0, iMaxY); //C# 랜덤버그
-  
+                iXVar = rndParticleXVar.Next(0, iMaxX);
+                iYVar = rndParticleYVar.Next(0, iMaxY);
                 particle.Update(fLife, fMove, fStart, iXVar, iYVar);
             }
 
