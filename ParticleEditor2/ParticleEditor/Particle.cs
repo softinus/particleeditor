@@ -72,9 +72,9 @@ namespace ParticleEditor
                 particle.Draw(ref particleData, texture);
         }
 
-        public void Update(ref OpenGL _gl)
+        public void Update()
         {
-            _gl.Rotate(particleData.EmitterAngle, 0, 0, 1);
+            openGL.Rotate(particleData.EmitterAngle, 0, 0, 1);
 
             Random rndParticleLife = new Random();
             Random rndParticleRepeat = new Random();

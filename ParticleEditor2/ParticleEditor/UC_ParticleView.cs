@@ -95,7 +95,7 @@ namespace ParticleEditor
             gl.ClearColor(m_Particle.particleData.BackgroundR, m_Particle.particleData.BackgroundG, m_Particle.particleData.BackgroundB, 1.0f);
             gl.LoadIdentity();
             
-            m_Particle.Update(ref gl);
+            m_Particle.Update();
             
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT); 
             gl.PushMatrix();
