@@ -34,9 +34,22 @@ namespace ParticleEditor
             m_ltImage.Add(ParticleEditor.Properties.Resources.img_SampleHeart);
 
             m_UC_ParticleControl.SetTextuerImage(m_ltImage[0]);
-            //ilSample.Images.Add(n);
         }
+        //
+        string m_szPath = string.Empty;
 
+        public void SetCustomImage(string _szPath, Bitmap _bmpTexture)
+        {
+            m_szPath = _szPath;
+
+            if (m_ltImage.Count() != 5)
+                m_ltImage.Add((Image)_bmpTexture);
+            else
+            {
+                m_ltImage.RemoveAt(4);
+                m_ltImage.Add((Image)_bmpTexture);
+            }
+        }
         //SendView
         internal void SetViewBackR(float _fBackR)
         {
@@ -52,8 +65,19 @@ namespace ParticleEditor
         }
         internal void SetViewTexture(string _szTexture, int _iIndex)
         {
-            m_UC_ParticleControl.SetTextuerImage(m_ltImage[_iIndex]);
-            m_UC_ParticleView.SetTexture(_szTexture);
+            if (_iIndex != 4)
+            {
+                m_UC_ParticleControl.SetTextuerImage(m_ltImage[_iIndex]);
+                m_UC_ParticleView.SetTexture(_szTexture, false);
+            }
+            else
+            {
+                if (m_ltImage.Count == 5)
+                {
+                    m_UC_ParticleControl.SetTextuerImage(m_ltImage[4]);
+                    m_UC_ParticleView.SetTexture(m_szPath, true);
+                }
+            }
         }
 
         //Tab02 14
@@ -251,6 +275,11 @@ namespace ParticleEditor
         internal void SetViewDest(string _szDest)
         {
             m_UC_ParticleView.SetDest(_szDest);
+        }
+
+        internal void SetTextureSelect()
+        {
+            m_UC_ParticleControl.SetTextureSelect();
         }
     }
 }

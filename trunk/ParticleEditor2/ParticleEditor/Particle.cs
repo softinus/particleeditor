@@ -25,10 +25,9 @@ namespace ParticleEditor
 
             particles = new ParticleEngine[iPaticleCount];
 
-            SetTexture(particleData.Texture);
+            SetTexture(particleData.Texture, particleData.CustomTexture);
             
             Random rndParticleStart = new Random();
-
 
             for (int i = 0; i < iPaticleCount; i++)
             {
@@ -71,48 +70,48 @@ namespace ParticleEditor
             foreach(ParticleEngine particle in particles)
                 particle.Draw(ref particleData, texture);
         }
-
+        
         public void Update()
         {
-            openGL.Rotate(particleData.EmitterAngle, 0, 0, 1);
-
-            Random rndParticleYVar = new Random();
             Random rndParticleLife = new Random();
+            Random rndParticleLifeVar = new Random();
             Random rndParticleRepeat = new Random();
             Random rndParticleStart = new Random();
             Random rndParticleXVar = new Random();
-            
+            Random rndParticleYVar = new Random();
 
             foreach (ParticleEngine particle in particles)
             {
-               
-                int iMinLife = 500;
+                int iMinLife = 500; //
                 int iMaxLife = 3000; //
 
                 int iMinMove = 500;
                 int iMaxMove = 1500;
 
-                int iMinStart = 0;
-                int iMaxStart = 2;
+                //int iMinStart = 0;
+                //int iMaxStart = 2;
 
                 int iMaxY = (int)particleData.YVariance * 2;
                 int iMaxX = (int)particleData.XVariance * 2;
 
-                
                 float fLife = rndParticleLife.Next(iMinLife, iMaxLife) / 1000.0f;
+                int iLifeVar = rndParticleLifeVar.Next(0, (int)(particleData.LifespanVariance * 10));
+
                 float fMove = rndParticleRepeat.Next(iMinMove, iMaxMove);
-                float fStart = rndParticleStart.Next(iMinStart, iMaxStart);
+                float fStart = particleData.StartY;//rndParticleStart.Next(iMinStart, iMaxStart);
                 int iXVar = rndParticleXVar.Next(0, iMaxX);
                 int iYVar = rndParticleYVar.Next(0, iMaxY);
+
                 iYVar = rndParticleYVar.Next(0, iMaxY); //C# 랜덤버그
                 iXVar = rndParticleXVar.Next(0, iMaxX);
                 iYVar = rndParticleYVar.Next(0, iMaxY);
-                particle.Update(fLife, fMove, fStart, iXVar, iYVar);
+
+                particle.Update(fLife, iLifeVar, fMove, fStart, iXVar, iYVar);
             }
 
             if (particleData.TextureInit)
             {
-                SetTexture(particleData.Texture);
+                SetTexture(particleData.Texture, particleData.CustomTexture);
                 particleData.TextureInit = false;
             }
 
@@ -306,19 +305,22 @@ namespace ParticleEditor
         //    return iRand;
         //}
 
-        public void SetTexture(string _szParticle)
+        public void SetTexture(string _szParticle, bool _bCustomer)
         {
             texture = new Texture();
             texture.Name = _szParticle;
-            string szPath = "SampleParticle/" + _szParticle;
+            string szPath = "";
+            if (!_bCustomer)
+                szPath = "SampleParticle/" + _szParticle;
+            else
+                szPath = _szParticle;
+
             texture.Create(openGL, szPath);
         }
     }
 
     public class ParticleEngine
     {
-        ParticleData _particleData = new ParticleData();
-
         private OpenGL m_openGL = new OpenGL();
         private ParticleData m_particleData = new ParticleData();
         private ParticleLocation m_particleLocation = new ParticleLocation();
@@ -326,6 +328,7 @@ namespace ParticleEditor
 
         private float[] m_ParticleSection = new float[6];
         private float m_fLifeTime = 0.0f;
+        private float m_fLifeDead = 0.0f;
 
         public ParticleEngine(OpenGL _openGL)
         {
@@ -349,17 +352,15 @@ namespace ParticleEditor
             m_openGL.TexCoord(0.0f, 0.0f); m_openGL.Vertex(m_particleLocation.DownX, m_particleLocation.UpY, 0);
             m_openGL.TexCoord(0.0f, 1.0f); m_openGL.Vertex(m_particleLocation.DownX, m_particleLocation.DownY, 0);
             m_openGL.TexCoord(1.0f, 1.0f); m_openGL.Vertex(m_particleLocation.UpX, m_particleLocation.DownY, 0);
-            
         }
 
-        public void Update(float _fLifeTime, float _fParticleMove, float _fParticleStart, int _iXVar, int _iYVar) //Engine Update
+        public void Update(float _fLifeTime, float _fLifeVar, float _fParticleMove, float _fParticleStart, int _iXVar, int _iYVar) //Engine Update
         {
             ParticleColor();
             ParticleSize();
             ParticleMove(_fParticleMove, false);
-            ParticleDead(_fLifeTime, _fParticleStart, _iXVar, _iYVar);
+            ParticleDead(_fLifeTime, _fLifeVar,_fParticleStart, _iXVar, _iYVar);
         }
-
 ////////////////////////////////////
         public void ParticleSize()
         {
@@ -389,10 +390,10 @@ namespace ParticleEditor
             }
             else
             {
-                SetEngineInit(_fParticleMove, 0, 0);
+                SetEngineInit(_fParticleMove, 0, 0, 0);
             }
         }
-        public void ParticleDead(float _fLifeTime, float _fParticleStart, int _iXVar, int _iYVar)
+        public void ParticleDead(float _fLifeTime, float _fLifeVar, float _fParticleStart, int _iXVar, int _iYVar)
         {
             if (_fLifeTime == 0.0f)
             {
@@ -401,9 +402,9 @@ namespace ParticleEditor
 
             SetLifeTime(_fLifeTime);
 
-            if ((m_fLifeTime > m_particleData.Lifespan))// || (m_particleLocation.DownY > (m_particleData.Lifespan * 0.1f)))
+            if ((m_fLifeTime > m_fLifeDead))// || (m_particleLocation.DownY > (m_particleData.Lifespan * 0.1f)))
             {
-                SetEngineInit(_fParticleStart, _iXVar, _iYVar);
+                SetEngineInit(_fParticleStart, _iXVar, _iYVar, _fLifeVar);
             }
         }
 
@@ -414,20 +415,29 @@ namespace ParticleEditor
         {
             m_fLifeTime += _fLifeTime;
         }
-        public void SetEngineInit(float _fInitData, int _iXVar, int _iYVar)
+
+        public void SetStartPosition(float _fStartX, float _fStartY)
         {
+            m_particleData.StartX = _fStartX;
+            m_particleData.StartY = _fStartY;
+        }
+        public void SetEngineInit(float _fStartData, int _iXVar, int _iYVar, float _fLifeVar)
+        {
+            //Reset
+            m_fLifeDead = m_particleData.Lifespan + ((int)(_fLifeVar / 10.0f)) * 2;
+
             float fXVar = 0.0f;
             float fYVar = 0.0f;
 
             SetGravity(ref fXVar, _iXVar, ref fYVar, _iYVar);
 
-            float fMove = (_fInitData * m_particleData.Lifespan) / 100.0f;
+            float fMove = ((_fStartData * 10) * m_particleData.Lifespan) / 100.0f;
 
             m_particleLocation.UpY = fMove + fYVar;
             m_particleLocation.DownY = (fMove - (m_particleData.StartSize * 2)) + fYVar;
 
-            m_particleLocation.UpX = m_particleData.StartSize + fXVar;
-            m_particleLocation.DownX = -m_particleData.StartSize + fXVar;
+            m_particleLocation.UpX = m_particleData.StartX + m_particleData.StartSize + fXVar;
+            m_particleLocation.DownX = m_particleData.StartX + - m_particleData.StartSize + fXVar;
 
             m_fLifeTime = 0;
 
@@ -676,6 +686,8 @@ namespace ParticleEditor
     {
         public ParticleData()
         {
+            customtexture = false;
+
             particleInit = false;
             textureInit = false;
 
@@ -735,9 +747,21 @@ namespace ParticleEditor
             source = "Src Alpha";
             dest = "One";
         }
-
+        ///////////////
+        public float StartX = 0.0f;
+        public float StartY = 0.0f;
+        
         ///////////////
 
+        private bool customtexture;
+        public bool CustomTexture
+        {
+            get { return customtexture; }
+            set { customtexture = value; }
+        }
+
+        //// 
+        
         private bool particleInit;
         public bool ParticleInit
         {

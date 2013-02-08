@@ -23,10 +23,12 @@ namespace ParticleEditor
             m_ParticleMain = new UC_ParticleMain();
             m_ParticleMain.Dock = DockStyle.Fill;
             m_ParticleMain.Parent = this.pnCenter;
-
-
         }
-
+        //SendControl
+        internal void SetTextureSelect()
+        {
+            m_ParticleMain.SetTextureSelect();
+        }
 
         //SendView
         internal void SetViewBackR(float _fBackR)
@@ -45,7 +47,10 @@ namespace ParticleEditor
         {
             m_ParticleMain.SetViewTexture(_szTexture, _iIndex);
         }
-
+        internal void SetCustomerTexture(string _szPath, Bitmap _bmpTexture)
+        {
+            m_ParticleMain.SetCustomImage(_szPath, _bmpTexture);
+        }
         //Tab02 14
         internal void SetViewEmitterType(string _szEmitterType)
         {
@@ -99,6 +104,7 @@ namespace ParticleEditor
         {
             m_ParticleMain.SetViewEndRot(_fEndRot);
         }
+
         internal void SetViewEndRotVar(float _fEndRotVar)
         {
             m_ParticleMain.SetViewEndRotVar(_fEndRotVar);

@@ -849,6 +849,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
+            this.label21.Enabled = false;
             this.label21.Font = new System.Drawing.Font("나눔고딕", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label21.Location = new System.Drawing.Point(5, 251);
             this.label21.Name = "label21";
@@ -858,6 +859,7 @@
             // 
             // tbEmitter
             // 
+            this.tbEmitter.Enabled = false;
             this.tbEmitter.Location = new System.Drawing.Point(170, 249);
             this.tbEmitter.Name = "tbEmitter";
             this.tbEmitter.Size = new System.Drawing.Size(40, 21);
@@ -868,6 +870,7 @@
             // trbEmitter
             // 
             this.trbEmitter.AutoSize = false;
+            this.trbEmitter.Enabled = false;
             this.trbEmitter.Location = new System.Drawing.Point(83, 247);
             this.trbEmitter.Maximum = 3600;
             this.trbEmitter.Name = "trbEmitter";
@@ -879,7 +882,6 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Enabled = false;
             this.label20.Font = new System.Drawing.Font("나눔고딕", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label20.Location = new System.Drawing.Point(5, 222);
             this.label20.Name = "label20";
@@ -889,7 +891,6 @@
             // 
             // tbFinishSizeVar
             // 
-            this.tbFinishSizeVar.Enabled = false;
             this.tbFinishSizeVar.Location = new System.Drawing.Point(170, 220);
             this.tbFinishSizeVar.Name = "tbFinishSizeVar";
             this.tbFinishSizeVar.Size = new System.Drawing.Size(40, 21);
@@ -900,7 +901,6 @@
             // trbFinishSizeVar
             // 
             this.trbFinishSizeVar.AutoSize = false;
-            this.trbFinishSizeVar.Enabled = false;
             this.trbFinishSizeVar.Location = new System.Drawing.Point(108, 218);
             this.trbFinishSizeVar.Maximum = 700;
             this.trbFinishSizeVar.Name = "trbFinishSizeVar";
@@ -942,7 +942,6 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Enabled = false;
             this.label18.Font = new System.Drawing.Font("나눔고딕", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label18.Location = new System.Drawing.Point(5, 164);
             this.label18.Name = "label18";
@@ -952,7 +951,6 @@
             // 
             // tbStartSizeVar
             // 
-            this.tbStartSizeVar.Enabled = false;
             this.tbStartSizeVar.Location = new System.Drawing.Point(170, 162);
             this.tbStartSizeVar.Name = "tbStartSizeVar";
             this.tbStartSizeVar.Size = new System.Drawing.Size(40, 21);
@@ -963,7 +961,6 @@
             // trbStartSizeVar
             // 
             this.trbStartSizeVar.AutoSize = false;
-            this.trbStartSizeVar.Enabled = false;
             this.trbStartSizeVar.Location = new System.Drawing.Point(102, 160);
             this.trbStartSizeVar.Maximum = 700;
             this.trbStartSizeVar.Name = "trbStartSizeVar";
@@ -1005,7 +1002,6 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Enabled = false;
             this.label16.Font = new System.Drawing.Font("나눔고딕", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label16.Location = new System.Drawing.Point(5, 106);
             this.label16.Name = "label16";
@@ -1015,7 +1011,6 @@
             // 
             // tbLifespanVar
             // 
-            this.tbLifespanVar.Enabled = false;
             this.tbLifespanVar.Location = new System.Drawing.Point(170, 104);
             this.tbLifespanVar.Name = "tbLifespanVar";
             this.tbLifespanVar.Size = new System.Drawing.Size(40, 21);
@@ -1026,7 +1021,6 @@
             // trbLifespanVar
             // 
             this.trbLifespanVar.AutoSize = false;
-            this.trbLifespanVar.Enabled = false;
             this.trbLifespanVar.Location = new System.Drawing.Point(108, 102);
             this.trbLifespanVar.Maximum = 100;
             this.trbLifespanVar.Name = "trbLifespanVar";

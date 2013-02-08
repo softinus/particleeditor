@@ -18,14 +18,29 @@ namespace ParticleEditor
     {
         Particle m_Particle = null;
 
+        double m_dWidth = 0.0;
+        double m_dHeight = 0.0;
+        double m_dRatio = 0.0;
+
+
         public UC_ParticleView()
         {
             InitializeComponent();
 
             OpenGL gl = openGLControl.OpenGL;
             m_Particle = new Particle(gl);
-
         }
+
+
+        double m_dX01 = 1.0;
+        double m_dX02 = -1.0;
+        double m_dY01 = 1.0;
+        double m_dY02 = -1.0;
+
+        double m_ResultdX01 = 0.0;
+        double m_ResultdX02 = 0.0;
+        double m_ResultdY01 = 0.0;
+        double m_ResultdY02 = 0.0;
 
         private void openGLControl_SizeChanged(object sender, EventArgs e)
         {
@@ -44,39 +59,39 @@ namespace ParticleEditor
             gl.Enable(OpenGL.GL_BLEND);
             gl.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE);	
 
-            double dX01 = -1.0;
-            double dX02 = 1.0;
-            double dY01 = -1.0;
-            double dY02 = 1.0;
-
             double dHeight = (double)this.Size.Height;
             double dWidth = (double)this.Size.Width;
 
             double dMainRatio = dHeight / dWidth;
-            double dGLRatio = (((dY02 - dY01)) / ((dX02 - dX01)));
+            double dGLRatio = (((m_dY02 - m_dY01)) / ((m_dX02 - m_dX01)));
             double dRatio = 0.0;
 
             gl.Viewport(0, 0, (int)dWidth, (int)dHeight);
             gl.MatrixMode(OpenGL.GL_PROJECTION);
             gl.LoadIdentity();
 
+            m_ResultdX01 = m_dX01;
+            m_ResultdX02 = m_dX02;
+            m_ResultdY01 = m_dY01;
+            m_ResultdY02 = m_dY02;
+
             if (dGLRatio > dMainRatio)
             {
-                dRatio = ((dY02 - dY01)) / dHeight;
+                dRatio = ((m_dY02 - m_dY01)) / dHeight;
 
-                dX01 = (((dX02 + dX01) - (dRatio * dWidth)) * 0.5);
-                dX02 = (((dX02 + dX01) + (dRatio * dWidth)) * 0.5);
+                m_ResultdX01 = (((m_dX02 + m_dX01) - (dRatio * dWidth)) * 0.5);
+                m_ResultdX02 = (((m_dX02 + m_dX01) + (dRatio * dWidth)) * 0.5);
 
-                gl.Ortho(dX01, dX02, dY01, dY02, -1, 1);
+                gl.Ortho(m_ResultdX01, m_ResultdX02, m_ResultdY01, m_ResultdY02, -1, 1);
             }
             else
             {
-                dRatio = ((dX02 - dX01)) / dWidth;
+                dRatio = ((m_dX02 - m_dX01)) / dWidth;
 
-                dY01 = ((dY02 + dY01) - (dRatio * dHeight)) * 0.5;
-                dY02 = ((dY02 + dY01) + (dRatio * dHeight)) * 0.5;
+                m_ResultdY01 = ((m_dY02 + m_dY01) + (dRatio * dHeight)) * 0.5;
+                m_ResultdY02 = ((m_dY02 + m_dY01) - (dRatio * dHeight)) * 0.5;
 
-                gl.Ortho(dX01, dX02, dY01, dY02, -1, 1);
+                gl.Ortho(m_ResultdX01, m_ResultdX02, m_ResultdY01, m_ResultdY02, -1, 1);
             }
 
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
@@ -88,7 +103,7 @@ namespace ParticleEditor
         private void openGLControl_OpenGLDraw(object sender, PaintEventArgs e)
         {
             if (m_Particle.particleData.TextureInit)
-                m_Particle.SetTexture(m_Particle.particleData.Texture);
+                m_Particle.SetTexture(m_Particle.particleData.Texture, m_Particle.particleData.CustomTexture);
 
             OpenGL gl = openGLControl.OpenGL; 
             
@@ -107,10 +122,6 @@ namespace ParticleEditor
             gl.End();
             gl.PopMatrix();
         }
-
-  
-
-        //Handles the OpenGLInitialized event of the openGLControl control.
 
         private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
         {
@@ -133,9 +144,19 @@ namespace ParticleEditor
 
         }
 
+        double m_dPointX = 0.0f;
+        double m_dPointY = 0.0f;
+
         public void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            double dX = (m_ResultdX01 + ((double)e.X / (double)this.ClientRectangle.Width) * (m_ResultdX02 - m_ResultdX01));
+            double dY = (m_ResultdY02 - ((double)e.Y / (double)this.ClientRectangle.Height) * (m_ResultdY02 - m_ResultdY01));
+
+            m_dPointX = dX;
+            m_dPointY = dY;
+
+            m_Particle.particleData.StartX = (float)m_dPointX;
+            m_Particle.particleData.StartY = (float)m_dPointY;
         }
 
         //DataSetting
@@ -152,10 +173,12 @@ namespace ParticleEditor
         {
             m_Particle.particleData.BackgroundB = _fBackB;
         }
-        internal void SetTexture(string _szTexture)
+
+        internal void SetTexture(string _szTexture, bool _bCustomer)
         {
             m_Particle.particleData.TextureInit = true;
             m_Particle.particleData.Texture = _szTexture;
+            m_Particle.particleData.CustomTexture = _bCustomer;
         }
 
         //Tab02 14
@@ -174,7 +197,7 @@ namespace ParticleEditor
         }
         internal void SetLifespanVar(float _fLifespanVar)
         {
-            //ParticleData.LifespanVariance = _fLifespanVar;
+            m_Particle.particleData.LifespanVariance = _fLifespanVar;
         }
         internal void SetStartSize(float _fStartSize)
         {
@@ -182,7 +205,7 @@ namespace ParticleEditor
         }
         internal void SetStartSizeVar(float _fStartSizeVar)
         {
-            //ParticleData.StartSizeVariance = _fStartSizeVar;
+            m_Particle.particleData.StartSizeVariance = _fStartSizeVar;
         }
         internal void SetFinishSize(float _fFinishSize)
         {
@@ -190,7 +213,7 @@ namespace ParticleEditor
         }
         internal void SetFinishSizeVar(float _fFinishSizeVar)
         {
-            //ParticleData.FinishSizeVariance = _fFinishSizeVar;
+            m_Particle.particleData.FinishSizeVariance = _fFinishSizeVar;
         }
         internal void SetEmitterAngle(float _fEmitterAngle)
         {
