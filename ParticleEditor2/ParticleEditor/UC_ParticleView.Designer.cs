@@ -41,7 +41,7 @@
             this.openGLControl.FrameRate = 20;
             this.openGLControl.Location = new System.Drawing.Point(0, 0);
             this.openGLControl.Name = "openGLControl";
-            this.openGLControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.openGLControl.RenderContextType = SharpGL.RenderContextType.DIBSection;
             this.openGLControl.Size = new System.Drawing.Size(630, 442);
             this.openGLControl.TabIndex = 0;
             this.openGLControl.OpenGLInitialized += new System.EventHandler(this.openGLControl_OpenGLInitialized);

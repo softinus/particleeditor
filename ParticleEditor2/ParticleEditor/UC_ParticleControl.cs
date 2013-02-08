@@ -41,6 +41,7 @@ namespace ParticleEditor
             trbFinishSize.Value = 0;
 
             trbLifespan.Value = 50;
+            trbLifespanVar.Value = 0;
         }
 
         public void SetTextuerImage(Image _imgSample)
@@ -80,11 +81,6 @@ namespace ParticleEditor
             string szData = cbSelectTexture.SelectedItem.ToString();
             szData = "img_Sample" + szData + ".png";
 
-            if (iIndex == 4)
-            {
-                return;
-            }
-
             if ((MainForm)this.ParentForm != null)
                 ((MainForm)this.ParentForm).SetViewTexture(szData, iIndex);
         }
@@ -117,7 +113,8 @@ namespace ParticleEditor
             float fData = trbLifespanVar.Value * 0.1f;
             tbLifespanVar.Text = string.Format("{0:F1}", (fData));
 
-            ((MainForm)this.ParentForm).SetViewLifespanVar(fData);
+            if ((MainForm)this.ParentForm != null)
+                ((MainForm)this.ParentForm).SetViewLifespanVar(fData);
         }
         private void SetBarToBoxStartSize()
         {
@@ -853,12 +850,20 @@ namespace ParticleEditor
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Bitmap normalBmp = new Bitmap(openFileDialog1.FileName);
-
                 pbSample.Image = normalBmp;
-                // Assign the cursor in the Stream to the Form's Cursor property.
-                //this.Cursor = new Cursor(openFileDialog1.OpenFile());
+                ((MainForm)this.ParentForm).SetCustomerTexture(openFileDialog1.FileName, normalBmp);
+
+                SetTextureSelect();
             }
         }
 
+
+        internal void SetTextureSelect()
+        {
+            if (cbSelectTexture.SelectedIndex != 4)
+                cbSelectTexture.SelectedIndex = 4;
+            else
+                ((MainForm)this.ParentForm).SetViewTexture("", 4);
+        }
     }
 }
