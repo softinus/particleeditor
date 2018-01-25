@@ -105,3 +105,17 @@ C:\Users\LeeJongHyuk\Desktop\particleeditor\trunk\ParticleEditor2\ParticleEditor
 C:\Users\LeeJongHyuk\Desktop\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.exe
 C:\Users\LeeJongHyuk\Desktop\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.pdb
 C:\Users\LeeJongHyuk\Desktop\particleeditor\trunk\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.About.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\bin\Release\ParticleEditor.exe.config
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\bin\Release\ParticleEditor.exe
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\bin\Release\ParticleEditor.pdb
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.csprojResolveAssemblyReference.cache
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.About.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.MainForm.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.Properties.Resources.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.UC_ParticleControl.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.UC_ParticleMain.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.UC_ParticleView.resources
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.csproj.GenerateResource.Cache
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.csproj.CoreCompileInputs.cache
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.exe
+E:\2.Lib\ParticleEditor\particleeditor\ParticleEditor2\ParticleEditor\obj\x86\Release\ParticleEditor.pdb

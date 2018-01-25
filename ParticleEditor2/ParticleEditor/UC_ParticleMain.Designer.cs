@@ -37,25 +37,25 @@
             this.pnView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnView.Location = new System.Drawing.Point(0, 0);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(263, 493);
+            this.pnView.Size = new System.Drawing.Size(179, 534);
             this.pnView.TabIndex = 3;
             // 
             // pnControl
             // 
             this.pnControl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnControl.Location = new System.Drawing.Point(263, 0);
+            this.pnControl.Location = new System.Drawing.Point(179, 0);
             this.pnControl.Name = "pnControl";
-            this.pnControl.Size = new System.Drawing.Size(250, 493);
+            this.pnControl.Size = new System.Drawing.Size(261, 534);
             this.pnControl.TabIndex = 2;
             // 
             // UC_ParticleMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pnView);
             this.Controls.Add(this.pnControl);
             this.Name = "UC_ParticleMain";
-            this.Size = new System.Drawing.Size(513, 493);
+            this.Size = new System.Drawing.Size(440, 534);
             this.ResumeLayout(false);
 
         }
